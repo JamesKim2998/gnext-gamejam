@@ -5,6 +5,7 @@ using UnityEngine;
 public class ClientGameStateLoader : MonoBehaviour
 {
     public GameManagerScript _gameManager;
+    public int _lastFrameCount = 0;
 
     void Awake()
     {
@@ -16,6 +17,10 @@ public class ClientGameStateLoader : MonoBehaviour
         if (_gameManager == null) return;
 
         WSClient.GetGameState();
+
+        var frameDelta = WSClientState.GameState.FrameCount - _lastFrameCount;
+        if (frameDelta <= 0) return;
+        WSClientState.GameState.FrameCount = _lastFrameCount;
 
         // ball
         var gameState = WSClientState.GameState;
@@ -31,15 +36,19 @@ public class ClientGameStateLoader : MonoBehaviour
             {
                 if (!clientPlayers.ContainsKey(serverPlayer.DeviceId))
                     continue;
-                LoadPlayer(clientPlayers[serverPlayer.DeviceId], serverPlayer);
+                LoadPlayer(clientPlayers[serverPlayer.DeviceId], serverPlayer, frameDelta);
             }
         }
     }
 
-    public static void LoadPlayer(GameObject player, PlayerState playerState)
+    public static void LoadPlayer(GameObject player, PlayerState playerState, int frameDelta)
     {
-        var pos = playerState.Position;
-        player.transform.position = new Vector3(pos.x, pos.y, -1);
+        Vector3 targetPosition = playerState.Position;
+        targetPosition.z = -1;
+        var orgPosition = player.transform.position;
+        var newPosition = Vector3.Lerp(orgPosition, targetPosition, frameDelta / (float)Application.targetFrameRate);
+        player.transform.position = newPosition;
+
         player.GetComponent<Rigidbody2D>().velocity = playerState.Velocity;
         player.GetComponent<PlayerScript>().PlayerHPValue = playerState.Hp;
     }

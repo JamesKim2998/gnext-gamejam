@@ -26,6 +26,7 @@ public struct PlayerState
 [Serializable]
 public class GameState
 {
+    public int FrameCount;
     public Vector2 BallPosition;
     public Vector2 BallVelocity;
     public List<PlayerState> PlayersState = new List<PlayerState>();

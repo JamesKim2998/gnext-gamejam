@@ -16,6 +16,7 @@ public class ServerGameStateUpdator : MonoBehaviour
         if (_gameManager == null) return;
 
         var gameState = WSServerState.GameState;
+        gameState.FrameCount = Time.frameCount;
 
         // ball
         gameState.BallPosition = _gameManager.Ball.transform.position;
