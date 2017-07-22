@@ -4,14 +4,7 @@ using UnityEngine;
 
 public class GameManagerScript : MonoBehaviour {
 
-    [Header("Player")]
-    public GameObject Player;
     public Dictionary<int, GameObject> Players = new Dictionary<int, GameObject>();
-
-
-    [Header("Player")]
-    public GameObject Enemy;
-
 
     [Header("Ball")]
     public GameObject Ball;

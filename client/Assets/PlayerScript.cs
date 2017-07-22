@@ -5,26 +5,16 @@ using TouchControlsKit;
 using UnityEngine.UI;
 
 public class PlayerScript : MonoBehaviour {
-    public static float power;
+    public float power;
     public GameObject HpBar;
     Canvas UICanvas;
     GameObject PlayerHp;
     Rigidbody2D body;
     public static float speed;
     public static float SpinSpeed;
-    public TCKDPad Pad;
 
-    GameObject nets;
-    GameObject nets2;
     float PowerTime;
     float SpeedTime;
-
-    public Sprite DS;
-    public Sprite DM;
-    public Sprite DL;
-    public Sprite US;
-    public Sprite UM;
-    public Sprite UL;
 
 	// Use this for initialization
 	void Start () {
@@ -35,115 +25,11 @@ public class PlayerScript : MonoBehaviour {
         SpinSpeed = -10.0f;
         PlayerHp = Instantiate(HpBar, new Vector3(540, 350, 0), Quaternion.identity, UICanvas.transform);
         PlayerHp.transform.SetParent(UICanvas.transform, false);
-        nets = GameObject.Find("net");
-        nets2 = GameObject.Find("net2");
     }
 	
 	// Update is called once per frame
 	void Update () {
-        //if (GameManagerScript.GameState == 1)
-        {
-            if (GameManagerScript.firstturn)
-                PlayerHp.transform.position = new Vector3(this.transform.position.x, this.transform.position.y - 80.0f, 0);
-            else
-                PlayerHp.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + 80.0f, 0);
-            this.transform.Rotate(new Vector3(0, 0, SpinSpeed));
-            if (Input.GetKey(KeyCode.LeftArrow))
-            {
-                body.AddForce(new Vector3(-speed * 1000, 0, 0), ForceMode2D.Force);
-            }
-            if (Input.GetKey(KeyCode.RightArrow))
-            {
-                body.AddForce(new Vector3(speed * 1000, 0, 0), ForceMode2D.Force);
-            }
-            if (Input.GetKey(KeyCode.UpArrow))
-            {
-                body.AddForce(new Vector3(0, speed * 1000, 0), ForceMode2D.Force);
-            }
-            if (Input.GetKey(KeyCode.DownArrow))
-            {
-                body.AddForce(new Vector3(0, -speed * 1000, 0), ForceMode2D.Force);
-            }
-        }
-    }
-
-    void OnCollisionEnter2D(Collision2D coll)
-    {
-        if (coll.transform.tag == "Ball")
-        {
-            Debug.Log("collp");
-            GameObject target = coll.gameObject;
-
-            Vector3 inNormal = Vector3.Normalize(
-                 transform.position - target.transform.position);
-            Vector3 bounceVector =
-                Vector3.Reflect(coll.relativeVelocity, inNormal);
-            Debug.Log("inNormaly : " + inNormal.y + " bounceVectory : " + bounceVector.y);
-            
-            target.GetComponent<Rigidbody2D>().AddForce(-inNormal * power, ForceMode2D.Impulse);
-        }
-
-        if(coll.transform.tag == "Player")
-        {
-            Debug.Log("ou");
-            PlayerHp.GetComponent<Slider>().value -= 20;
-        }
-
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if(collision.transform.tag == "item3")
-        {
-            collision.gameObject.SetActive(false);
-            StartCoroutine("PowerTimer");
-        }
-        if (collision.transform.tag == "item4")
-        {
-            collision.gameObject.SetActive(false);
-            StartCoroutine("SpeedTimer");
-        }
-        if (collision.transform.tag == "item5")
-        {
-
-            body.drag = 6.5f;
-        }
-        if(collision.transform.tag == "item6")
-        {
-            GameObject white = GameObject.FindWithTag("item7");
-            this.transform.position = white.transform.position;
-            collision.gameObject.SetActive(false);
-            white.gameObject.SetActive(false);
-        }
-        if(collision.transform.tag == "item8")
-        {
-            body.drag = 0.0f;
-        }
-        if (collision.transform.tag == "item9")
-        {
-            StartCoroutine("SmallNet");
-            collision.gameObject.SetActive(false);
-        }
-
-        if (collision.transform.tag == "item10")
-        {
-            StartCoroutine("BigNet");
-            collision.gameObject.SetActive(false);
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.transform.tag == "item5")
-        {
-            collision.gameObject.SetActive(false);
-            body.drag = 0.6f;
-        }
-        if (collision.transform.tag == "item8")
-        {
-            collision.gameObject.SetActive(false);
-            body.drag = 0.6f;
-        }
+        this.transform.Rotate(new Vector3(0, 0, SpinSpeed));
     }
 
     IEnumerator PowerTimer()
@@ -164,47 +50,4 @@ public class PlayerScript : MonoBehaviour {
         speed = 6.0f;
     }
 
-    IEnumerator SmallNet()
-    {
-        if (GameManagerScript.firstturn)
-        {
-            nets = GameObject.Find("net");
-            nets.GetComponent<SpriteRenderer>().sprite = DS;
-            nets.GetComponent<BoxCollider2D>().size = new Vector2(0.6f, 0.18f);
-            yield return new WaitForSeconds(5.0f);
-            nets.GetComponent<SpriteRenderer>().sprite = DM;
-            nets.GetComponent<BoxCollider2D>().size = new Vector2(0.8f, 0.18f);
-        }
-        else
-        {
-            nets2 = GameObject.Find("net2");
-            nets2.GetComponent<SpriteRenderer>().sprite = US;
-            nets2.GetComponent<BoxCollider2D>().size = new Vector2(0.6f, 0.18f);
-            yield return new WaitForSeconds(5.0f);
-            nets2.GetComponent<SpriteRenderer>().sprite = UM;
-            nets2.GetComponent<BoxCollider2D>().size = new Vector2(0.8f, 0.18f);
-        }
-    }
-
-    IEnumerator BigNet()
-    {
-        if (GameManagerScript.firstturn)
-        {
-            nets2 = GameObject.Find("net2");
-            nets2.GetComponent<SpriteRenderer>().sprite = UL;
-            nets2.GetComponent<BoxCollider2D>().size = new Vector2(1.1f, 0.18f);
-            yield return new WaitForSeconds(5.0f);
-            nets2.GetComponent<SpriteRenderer>().sprite = UM;
-            nets2.GetComponent<BoxCollider2D>().size = new Vector2(0.8f, 0.18f);
-        }
-        else
-        {
-            nets = GameObject.Find("net");
-            nets.GetComponent<SpriteRenderer>().sprite = DL;
-            nets.GetComponent<BoxCollider2D>().size = new Vector2(1.1f, 0.18f);
-            yield return new WaitForSeconds(5.0f);
-            nets.GetComponent<SpriteRenderer>().sprite = DM;
-            nets.GetComponent<BoxCollider2D>().size = new Vector2(0.8f, 0.18f);
-        }
-    }
 }
