@@ -36,7 +36,7 @@ public class GameManagerScript : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        firstturn = true;
+        firstturn = false;
         GameTime = 90.0f;
     }
 	

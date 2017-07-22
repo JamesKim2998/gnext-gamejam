@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class PlayerScript : MonoBehaviour {
     public static float power;
     public GameObject HpBar;
-    public Canvas UICanvas;
+    Canvas UICanvas;
     GameObject PlayerHp;
     Rigidbody2D body;
     public static float speed;
@@ -22,6 +22,7 @@ public class PlayerScript : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         body = GetComponent<Rigidbody2D>();
+        UICanvas = GameObject.Find("Canvas").GetComponent<Canvas>();
         power = 4.0f;
         speed = 6.0f;
         SpinSpeed = -10.0f;
@@ -33,7 +34,10 @@ public class PlayerScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        PlayerHp.transform.position = new Vector3(this.transform.position.x, this.transform.position.y - 80.0f, 0);
+        if(GameManagerScript.firstturn)
+            PlayerHp.transform.position = new Vector3(this.transform.position.x, this.transform.position.y - 80.0f, 0);
+        else
+            PlayerHp.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + 80.0f, 0);
         this.transform.Rotate(new Vector3(0, 0, SpinSpeed));
         if (Input.GetKey(KeyCode.LeftArrow))
         {
@@ -69,7 +73,7 @@ public class PlayerScript : MonoBehaviour {
             target.GetComponent<Rigidbody2D>().AddForce(-inNormal * power, ForceMode2D.Impulse);
         }
 
-        if(coll.transform.tag == "enemy")
+        if(coll.transform.tag == "Player")
         {
             Debug.Log("ou");
             PlayerHp.GetComponent<Slider>().value -= 20;

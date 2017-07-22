@@ -13,9 +13,9 @@ public class ItemScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         if (this.gameObject.transform.tag == "item6")
-            this.transform.Rotate(new Vector3(0, 0, 15.0f));
+            this.transform.Rotate(new Vector3(0, 0, -10.0f));
         if (this.gameObject.transform.tag == "item7")
-            this.transform.Rotate(new Vector3(0, 0, -15.0f));
+            this.transform.Rotate(new Vector3(0, 0, 10.0f));
 
     }
 
