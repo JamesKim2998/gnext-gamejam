@@ -15,6 +15,6 @@ public class ClientPlayerInputHandler : MonoBehaviour
             RightArrow = Input.GetKey(KeyCode.RightArrow),
             LeftArrow = Input.GetKey(KeyCode.LeftArrow),
         });
-        Debug.Log(TouchScreen.inNormal);
+        // Debug.Log(TouchScreen.inNormal);
     }
 }
