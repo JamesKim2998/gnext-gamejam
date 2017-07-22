@@ -51,14 +51,14 @@ public class ServerPlayerSimulator : MonoBehaviour
     {
         if (coll.transform.tag == "Ball")
         {
-            Debug.Log("collp");
+            // Debug.Log("collp");
             GameObject target = coll.gameObject;
 
             Vector3 inNormal = Vector3.Normalize(
                  transform.position - target.transform.position);
             Vector3 bounceVector =
                 Vector3.Reflect(coll.relativeVelocity, inNormal);
-            Debug.Log("inNormaly : " + inNormal.y + " bounceVectory : " + bounceVector.y);
+            // Debug.Log("inNormaly : " + inNormal.y + " bounceVectory : " + bounceVector.y);
 
             target.GetComponent<Rigidbody2D>().AddForce(-inNormal * Player.power, ForceMode2D.Impulse);
         }

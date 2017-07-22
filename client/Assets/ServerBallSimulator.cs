@@ -30,7 +30,7 @@ public class ServerBallSimultor : MonoBehaviour
         {
             Destroy(coll.gameObject);
             ballRigid.velocity = new Vector3(0, 0, 0);
-            Debug.Log(ballRigid.velocity);
+            // Debug.Log(ballRigid.velocity);
         }
 
         if (coll.transform.tag == "p1net")

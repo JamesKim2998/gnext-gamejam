@@ -46,7 +46,7 @@ public class ClientGameStateLoader : MonoBehaviour
         Vector3 targetPosition = playerState.Position;
         targetPosition.z = -1;
         var orgPosition = player.transform.position;
-        var newPosition = Vector3.Lerp(orgPosition, targetPosition, frameDelta / 6f);
+        var newPosition = Vector3.Lerp(orgPosition, targetPosition, 0.5f);
         player.transform.position = newPosition;
 
         player.GetComponent<Rigidbody2D>().velocity = playerState.Velocity;

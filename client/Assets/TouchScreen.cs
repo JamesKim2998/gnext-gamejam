@@ -18,10 +18,10 @@ public class TouchScreen : MonoBehaviour {
             if (Input.GetTouch(0).phase == TouchPhase.Began)
             //if (Input.GetMouseButtonDown(0))
             {
-                Debug.Log("hi");
+                // Debug.Log("hi");
                 Vector3 temppoint = Input.GetTouch(0).position;
                 StartPoint = temppoint;
-                Debug.Log(StartPoint);
+                // Debug.Log(StartPoint);
             }
             else if (Input.GetTouch(0).phase == TouchPhase.Moved)
             //else if (Input.GetMouseButton(0))
@@ -29,7 +29,7 @@ public class TouchScreen : MonoBehaviour {
                 Vector3 temppoint2 = Input.GetTouch(0).position;
                 EndPoint = temppoint2;
                 inNormal = Vector3.Normalize(EndPoint - StartPoint);
-                Debug.Log(inNormal);
+                // Debug.Log(inNormal);
             }
             else;
         }

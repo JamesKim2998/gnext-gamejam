@@ -47,7 +47,7 @@ public class PlayerScript : MonoBehaviour
     private IEnumerator CoPowerTimer()
     {
         PlayerAnimator.SetBool("PowerUp", true);
-        Debug.Log("powerco");
+        // Debug.Log("powerco");
         power = 12.0f;
         SpinSpeed = -30.0f;
         yield return new WaitForSeconds(5.0f);
@@ -63,7 +63,7 @@ public class PlayerScript : MonoBehaviour
 
     private IEnumerator CoSpeedTimer()
     {
-        Debug.Log("speedco");
+        // Debug.Log("speedco");
         speed = 18.0f;
         yield return new WaitForSeconds(5.0f);
         speed = 12.0f;

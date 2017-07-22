@@ -11,14 +11,14 @@ public class ServerNetManager : MonoBehaviour
 
     public void SmallNet(int team)
     {
-        Debug.Log("SmallNet: " + team);
+        // Debug.Log("SmallNet: " + team);
         _gameManager.NetManager.SmallNet(team);
         WSServer.SmallNet(team);
     }
 
     public void BigNet(int team)
     {
-        Debug.Log("BigNet: " + team);
+        // Debug.Log("BigNet: " + team);
         _gameManager.NetManager.BigNet(team);
         WSServer.BigNet(team);
     }
