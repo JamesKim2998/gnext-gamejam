@@ -9,7 +9,12 @@ public class Init : MonoBehaviour
 #else
     public static bool DebugStandalone = false;
 #endif
+
+#if !UNITY_EDITOR && UNITY_STANDALONE_OSX
+    public static bool IsClient = false;
+#else
     public static bool IsClient = true;
+#endif
 
     void Awake()
     {

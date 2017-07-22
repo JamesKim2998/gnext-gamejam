@@ -25,12 +25,14 @@ public struct PlayerState
 public class GameState
 {
     public Vector2 BallPosition;
+    public Vector2 BallVelocity;
     public List<PlayerState> PlayersState = new List<PlayerState>();
     public GameState Clone()
     {
         var ret = new GameState
         {
             BallPosition = this.BallPosition,
+            BallVelocity = this.BallVelocity,
         };
         ret.PlayersState.AddRange(this.PlayersState);
         return ret;

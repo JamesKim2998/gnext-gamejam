@@ -20,6 +20,7 @@ public class ClientGameStateLoader : MonoBehaviour
         // ball
         var gameState = WSClientState.GameState;
         _gameManager.Ball.transform.position = gameState.BallPosition;
+        _gameManager.Ball.GetComponent<Rigidbody2D>().velocity = gameState.BallVelocity;
 
         // players
         var serverPlayers = gameState.PlayersState;

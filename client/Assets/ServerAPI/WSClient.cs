@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using WebSocketSharp;
 
@@ -12,6 +13,7 @@ public static class WSClient
     private static WebSocket _updatePlayerInput;
     private static WebSocket _getGameState;
     private static WebSocket _broadcast;
+    private static readonly List<string> _broadcastQueue = new List<string>();
 
     private static bool _debugStandaloneIsConnected = false;
 
@@ -60,10 +62,8 @@ public static class WSClient
         _broadcast.OnMessage += (sender, e) =>
         {
             // Debug.Log("Broadcast: " + e.Data);
-            var protocolEnd = e.Data.IndexOf('{');
-            var protocol = e.Data.Substring(0, protocolEnd);
-            var json = e.Data.Substring(protocolEnd);
-            HandleBroadcast(protocol, json);
+            lock (_broadcastQueue)
+                _broadcastQueue.Add(e.Data);
         };
         _broadcast.Connect();
     }
@@ -153,7 +153,23 @@ public static class WSClient
         _getGameState.Send("GetGameState");
     }
 
-    public static void HandleBroadcast(string protocol, string json)
+    public static void HandleAllBroadcast()
+    {
+        lock (_broadcastQueue)
+        {
+            if (_broadcastQueue.Count == 0) return;
+            foreach (var data in _broadcastQueue)
+            {
+                var protocolEnd = data.IndexOf('{');
+                var protocol = data.Substring(0, protocolEnd);
+                var json = data.Substring(protocolEnd);
+                HandleBroadcast(protocol, json);
+            }
+            _broadcastQueue.Clear();
+        }
+    }
+
+    private static void HandleBroadcast(string protocol, string json)
     {
         if (protocol == "SpawnItem")
         {

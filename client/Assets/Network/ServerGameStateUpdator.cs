@@ -19,6 +19,7 @@ public class ServerGameStateUpdator : MonoBehaviour
 
         // ball
         gameState.BallPosition = _gameManager.Ball.transform.position;
+        gameState.BallVelocity = _gameManager.Ball.GetComponent<Rigidbody2D>().velocity;
 
         // players
         var clientPlayers = _gameManager.Players;

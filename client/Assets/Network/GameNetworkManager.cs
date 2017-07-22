@@ -15,4 +15,9 @@ public class GameNetworkManager : MonoBehaviour
         if (!WSServer.IsRunning && !Init.DebugStandalone)
             gameObject.AddComponent<ClientItemSpawner>();
     }
+
+    private void Update()
+    {
+        WSClient.HandleAllBroadcast();
+    }
 }
