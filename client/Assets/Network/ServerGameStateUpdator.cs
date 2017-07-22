@@ -22,7 +22,7 @@ public class ServerGameStateUpdator : MonoBehaviour
 
         // players
         var clientPlayers = _gameManager.Players;
-        gameState.PlayersState = new List<PlayerState>(clientPlayers.Count);
+        gameState.PlayersState.Clear();
         foreach (var kv in clientPlayers)
         {
             gameState.PlayersState.Add(new PlayerState
@@ -31,7 +31,5 @@ public class ServerGameStateUpdator : MonoBehaviour
                 Position = kv.Value.transform.position,
             });
         }
-
-        WSServerState.GameState = gameState;
     }
 }

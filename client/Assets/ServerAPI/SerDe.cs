@@ -21,8 +21,17 @@ public struct PlayerState
 }
 
 [Serializable]
-public struct GameState
+public class GameState
 {
     public Vector2 BallPosition;
-    public List<PlayerState> PlayersState;
+    public readonly List<PlayerState> PlayersState = new List<PlayerState>();
+    public GameState Clone()
+    {
+        var ret = new GameState
+        {
+            BallPosition = this.BallPosition,
+        };
+        ret.PlayersState.AddRange(this.PlayersState);
+        return ret;
+    }
 }

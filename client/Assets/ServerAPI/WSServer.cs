@@ -36,14 +36,28 @@ public static class WSServer
         }
     }
 
-    public static bool IsRunning { get { return _sv != null; } }
+    private static bool _debugStandaloneIsRunning;
+    public static bool IsRunning
+    {
+        get
+        {
+            if (Init.DebugStandalone) return _debugStandaloneIsRunning;
+            return _sv != null;
+        }
+    }
 
     private static WebSocketServer _sv;
 
     public static void Start()
     {
+        if (Init.DebugStandalone)
+        {
+            _debugStandaloneIsRunning = true;
+            return;
+        }
+
         if (_sv != null) Stop();
-        _sv = new WebSocketServer("ws://0.0.0.0:8080");
+        _sv = new WebSocketServer("ws://0.0.0.0:8080/");
         _sv.AddWebSocketService<Join>("/Join");
         _sv.AddWebSocketService<UpdatePlayerInput>("/UpdatePlayerInput");
         _sv.AddWebSocketService<GetGameState>("/GetGameState");
@@ -52,6 +66,12 @@ public static class WSServer
 
     public static void Stop()
     {
+        if (_debugStandaloneIsRunning)
+        {
+            _debugStandaloneIsRunning = false;
+            return;
+        }
+
         if (_sv == null) return;
         _sv.Stop();
         _sv = null;

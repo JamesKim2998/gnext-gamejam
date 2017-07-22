@@ -4,29 +4,34 @@ using UnityEngine;
 
 public class Init : MonoBehaviour
 {
+#if UNITY_EDITOR
+    public static bool DebugStandalone = true;
+#else
+    public static bool DebugStandalone = false;
+#endif
+    public static bool IsClient;
+
     void Awake()
     {
-        var isClient = true;
-#if !UNITY_EDITOR && UNITY_STANDALONE_OSX
-        isClient = false;
-#endif
+        InitNetwork();
+    }
 
-        if (WSConfig.DebugStandalone)
+    void InitNetwork()
+    {
+        if (WSServer.IsRunning && IsClient)
+            WSServer.Stop();
+        if (WSClient.IsConnected && !IsClient)
+            WSClient.Disconnect();
+
+        if (IsClient && !WSClient.IsConnected)
         {
-            // do nothing
-            WSServerState.AddJoinPlayer(WSConfig.DeviceId);
+            WSClient.Connect();
+            WSClient.Join();
         }
-        else
+
+        if (!IsClient && !WSServer.IsRunning)
         {
-            if (isClient)
-            {
-                WSClient.Connect();
-                WSClient.Join();
-            }
-            else
-            {
-                WSServer.Start();
-            }
+            WSServer.Start();
         }
     }
 }

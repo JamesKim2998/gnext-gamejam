@@ -16,11 +16,11 @@ public class GameNetworkManager : MonoBehaviour
 
     private void Update()
     {
-        if (WSServer.IsRunning || WSConfig.DebugStandalone)
+        if (WSServer.IsRunning || Init.DebugStandalone)
             UpdateOnServer();
-        if (!WSServer.IsRunning || WSConfig.DebugStandalone)
+        if (!WSServer.IsRunning || Init.DebugStandalone)
             UpdateOnClient();
-        if (WSConfig.DebugStandalone)
+        if (Init.DebugStandalone)
             SetMyPlayerForDebug();
     }
 
@@ -51,7 +51,7 @@ public class GameNetworkManager : MonoBehaviour
             _gameManager.Players[myDeviceId] = SpawnClientPlayer(myDeviceId);
         }
 
-        foreach (var playerInput in WSServerState.PlayerInputs)
+        foreach (var playerInput in WSClientState.GameState.PlayersState)
         {
             var ownerDeviceId = playerInput.DeviceId;
             if (_gameManager.Players.ContainsKey(ownerDeviceId))
