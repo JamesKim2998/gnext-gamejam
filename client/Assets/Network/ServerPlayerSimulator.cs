@@ -114,7 +114,7 @@ public class ServerPlayerSimulator : MonoBehaviour
         }
         if (collision.transform.tag == "item8")
         {
-            collision.gameObject.SetActive(false);
+            Destroy(collision.gameObject);
             body.drag = 0.6f;
         }
     }

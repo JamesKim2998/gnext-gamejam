@@ -20,13 +20,13 @@ public class BallScript : MonoBehaviour {
         Vector3 random = Vector3.Normalize(new Vector3(Random.Range(-1.0f, 1f), Random.Range(-1.0f, 1f), 0));
         if (coll.transform.tag == "item1")
         {
-            coll.gameObject.SetActive(false);
+            Destroy(coll.gameObject);
             ballRigid.AddForce(random, ForceMode2D.Impulse);
         }
 
         if (coll.transform.tag == "item2")
         {
-            coll.gameObject.SetActive(false);
+            Destroy(coll.gameObject);
             ballRigid.velocity = new Vector3(0, 0, 0);
             Debug.Log(ballRigid.velocity);
         }
