@@ -19,6 +19,7 @@ public struct PlayerState
     public int DeviceId;
     public int Queue;
     public Vector2 Position;
+    public Vector2 Velocity;
     public float Hp;
 }
 

@@ -70,7 +70,10 @@ public class NetworkPlayerSpawner : MonoBehaviour
         if (_gameManager.Players.ContainsKey(ownerDeviceId))
             return _gameManager.Players[ownerDeviceId];
         var go = InstantitatePlayer(playerState.Queue);
-        go.transform.position = playerState.Position;
+        Vector3 pos = playerState.Position;
+        pos.z = -1;
+        go.transform.position = pos;
+        go.GetComponent<Rigidbody2D>().velocity = playerState.Velocity;
         go.GetComponent<PlayerScript>().PlayerHPValue = playerState.Hp;
         var queue = go.AddComponent<PlayerQueue>();
         queue.Value = playerState.Queue;
@@ -88,14 +91,11 @@ public class NetworkPlayerSpawner : MonoBehaviour
         var myPlayer = SpawnClientPlayer(new PlayerState()
         {
             DeviceId = WSConfig.DeviceId,
-            Position = Vector2.one,
+            Position = _instantiatePositions[0],
+            Velocity = Vector2.zero,
             Queue = 0,
             Hp = 100,
         });
-
-        Vector3 pos = _instantiatePositions[0];
-        pos.z = -1;
-        myPlayer.transform.position = pos;
 
         if (!myPlayer.GetComponent<ClientPlayerInputHandler>())
             myPlayer.AddComponent<ClientPlayerInputHandler>();
