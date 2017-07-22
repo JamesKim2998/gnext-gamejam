@@ -15,8 +15,10 @@ public class ClientGameStateLoader : MonoBehaviour
     {
         if (_gameManager == null) return;
 
+        WSClient.GetGameState();
+
         // ball
-        var gameState = WSServerState.GameState;
+        var gameState = WSClientState.GameState;
         _gameManager.Ball.transform.position = gameState.BallPosition;
 
         // players

@@ -20,25 +20,19 @@ public static class WSServer
     {
         protected override void OnMessage(MessageEventArgs e)
         {
-            Debug.Log("PlayerInput: " + e.Data);
+            // Debug.Log("PlayerInput: " + e.Data);
             var playerInput = JsonUtility.FromJson<PlayerInput>(e.Data);
-            WSServerState.PlayerInputs[playerInput.DeviceId] = playerInput;
+            WSServerState.SetPlayerInput(playerInput);
         }
     }
 
     private class GetGameState : WebSocketBehavior
     {
-        public GetGameState()
-            : base()
-        {
-            EmitOnPing = true;
-        }
-
         protected override void OnMessage(MessageEventArgs e)
         {
-            Debug.Log("GetGameState");
-            if (!e.IsPing) return;
-            Send(JsonUtility.ToJson(WSServerState.GameState));
+            var gameState = JsonUtility.ToJson(WSServerState.GameState);
+            // Debug.Log("GetGameState: " + gameState);
+            Send(gameState);
         }
     }
 

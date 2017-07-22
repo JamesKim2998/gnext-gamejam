@@ -6,6 +6,11 @@ public class Init : MonoBehaviour
 {
     void Awake()
     {
+        var isClient = true;
+#if !UNITY_EDITOR && UNITY_STANDALONE_OSX
+        isClient = false;
+#endif
+
         if (WSConfig.DebugStandalone)
         {
             // do nothing
@@ -13,12 +18,15 @@ public class Init : MonoBehaviour
         }
         else
         {
-#if !UNITY_EDITOR && UNITY_STANDALONE_OSX
-            WSServer.Start();
-#else
-            WSClient.Connect();
-            WSClient.Join();
-#endif
+            if (isClient)
+            {
+                WSClient.Connect();
+                WSClient.Join();
+            }
+            else
+            {
+                WSServer.Start();
+            }
         }
     }
 }

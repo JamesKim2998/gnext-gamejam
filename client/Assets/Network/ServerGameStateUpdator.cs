@@ -15,8 +15,9 @@ public class ServerGameStateUpdator : MonoBehaviour
     {
         if (_gameManager == null) return;
 
-        // ball
         var gameState = WSServerState.GameState;
+
+        // ball
         gameState.BallPosition = _gameManager.Ball.transform.position;
 
         // players
@@ -30,5 +31,7 @@ public class ServerGameStateUpdator : MonoBehaviour
                 Position = kv.Value.transform.position,
             });
         }
+
+        WSServerState.GameState = gameState;
     }
 }

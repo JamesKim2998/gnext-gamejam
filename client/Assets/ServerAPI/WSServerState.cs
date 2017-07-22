@@ -4,7 +4,7 @@ public static class WSServerState
 {
     public static readonly List<int> JoinedPlayers = new List<int>();
     public static readonly List<PlayerInput> PlayerInputs = new List<PlayerInput>();
-    public static readonly GameState GameState = new GameState();
+    public static GameState GameState = new GameState();
 
     public static void AddJoinPlayer(int deviceId)
     {

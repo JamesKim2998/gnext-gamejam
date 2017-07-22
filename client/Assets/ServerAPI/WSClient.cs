@@ -49,7 +49,7 @@ public static class WSClient
         _getGameState = new WebSocket(ServerAddr + "GetGameState");
         _getGameState.OnMessage += (sender, e) =>
         {
-            Debug.Log("GameState: " + e.Data);
+            // Debug.Log("GameState: " + e.Data);
             WSClientState.GameState = JsonUtility.FromJson<GameState>(e.Data);
         };
         _getGameState.Connect();
@@ -74,6 +74,6 @@ public static class WSClient
 
     public static void GetGameState()
     {
-        _getGameState.Ping();
+        _getGameState.Send("GetGameState");
     }
 }
