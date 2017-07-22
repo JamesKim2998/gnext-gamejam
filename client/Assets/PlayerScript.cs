@@ -19,6 +19,13 @@ public class PlayerScript : MonoBehaviour {
     float PowerTime;
     float SpeedTime;
 
+    public Sprite DS;
+    public Sprite DM;
+    public Sprite DL;
+    public Sprite US;
+    public Sprite UM;
+    public Sprite UL;
+
 	// Use this for initialization
 	void Start () {
         body = GetComponent<Rigidbody2D>();
@@ -34,26 +41,29 @@ public class PlayerScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if(GameManagerScript.firstturn)
-            PlayerHp.transform.position = new Vector3(this.transform.position.x, this.transform.position.y - 80.0f, 0);
-        else
-            PlayerHp.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + 80.0f, 0);
-        this.transform.Rotate(new Vector3(0, 0, SpinSpeed));
-        if (Input.GetKey(KeyCode.LeftArrow))
+        //if (GameManagerScript.GameState == 1)
         {
-            body.AddForce(new Vector3(-speed*1000, 0, 0), ForceMode2D.Force);
-        }
-        if (Input.GetKey(KeyCode.RightArrow))
-        {
-            body.AddForce(new Vector3(speed * 1000, 0, 0), ForceMode2D.Force);
-        }
-        if (Input.GetKey(KeyCode.UpArrow))
-        {
-            body.AddForce(new Vector3(0, speed * 1000, 0), ForceMode2D.Force);
-        }
-        if (Input.GetKey(KeyCode.DownArrow))
-        {
-            body.AddForce(new Vector3(0, -speed * 1000, 0), ForceMode2D.Force);
+            if (GameManagerScript.firstturn)
+                PlayerHp.transform.position = new Vector3(this.transform.position.x, this.transform.position.y - 80.0f, 0);
+            else
+                PlayerHp.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + 80.0f, 0);
+            this.transform.Rotate(new Vector3(0, 0, SpinSpeed));
+            if (Input.GetKey(KeyCode.LeftArrow))
+            {
+                body.AddForce(new Vector3(-speed * 1000, 0, 0), ForceMode2D.Force);
+            }
+            if (Input.GetKey(KeyCode.RightArrow))
+            {
+                body.AddForce(new Vector3(speed * 1000, 0, 0), ForceMode2D.Force);
+            }
+            if (Input.GetKey(KeyCode.UpArrow))
+            {
+                body.AddForce(new Vector3(0, speed * 1000, 0), ForceMode2D.Force);
+            }
+            if (Input.GetKey(KeyCode.DownArrow))
+            {
+                body.AddForce(new Vector3(0, -speed * 1000, 0), ForceMode2D.Force);
+            }
         }
     }
 
@@ -159,16 +169,20 @@ public class PlayerScript : MonoBehaviour {
         if (GameManagerScript.firstturn)
         {
             nets = GameObject.Find("net");
-            nets.transform.localScale = new Vector3(1000.0f, 1000.0f, 1);
+            nets.GetComponent<SpriteRenderer>().sprite = DS;
+            nets.GetComponent<BoxCollider2D>().size = new Vector2(0.6f, 0.18f);
             yield return new WaitForSeconds(5.0f);
-            nets.transform.localScale = new Vector3(2000.0f, 1000.0f, 1);
+            nets.GetComponent<SpriteRenderer>().sprite = DM;
+            nets.GetComponent<BoxCollider2D>().size = new Vector2(0.8f, 0.18f);
         }
         else
         {
             nets2 = GameObject.Find("net2");
-            nets2.transform.localScale = new Vector3(1000.0f, 1000.0f, 1);
+            nets2.GetComponent<SpriteRenderer>().sprite = US;
+            nets2.GetComponent<BoxCollider2D>().size = new Vector2(0.6f, 0.18f);
             yield return new WaitForSeconds(5.0f);
-            nets2.transform.localScale = new Vector3(2000.0f, 1000.0f, 1);
+            nets2.GetComponent<SpriteRenderer>().sprite = UM;
+            nets2.GetComponent<BoxCollider2D>().size = new Vector2(0.8f, 0.18f);
         }
     }
 
@@ -177,16 +191,20 @@ public class PlayerScript : MonoBehaviour {
         if (GameManagerScript.firstturn)
         {
             nets2 = GameObject.Find("net2");
-            nets2.transform.localScale = new Vector3(4000.0f, 1000.0f, 1);
+            nets2.GetComponent<SpriteRenderer>().sprite = UL;
+            nets2.GetComponent<BoxCollider2D>().size = new Vector2(1.1f, 0.18f);
             yield return new WaitForSeconds(5.0f);
-            nets2.transform.localScale = new Vector3(2000.0f, 1000.0f, 1);
+            nets2.GetComponent<SpriteRenderer>().sprite = UM;
+            nets2.GetComponent<BoxCollider2D>().size = new Vector2(0.8f, 0.18f);
         }
         else
         {
             nets = GameObject.Find("net");
-            nets.transform.localScale = new Vector3(4000.0f, 1000.0f, 1);
+            nets.GetComponent<SpriteRenderer>().sprite = DL;
+            nets.GetComponent<BoxCollider2D>().size = new Vector2(1.1f, 0.18f);
             yield return new WaitForSeconds(5.0f);
-            nets.transform.localScale = new Vector3(2000.0f, 1000.0f, 1);
+            nets.GetComponent<SpriteRenderer>().sprite = DM;
+            nets.GetComponent<BoxCollider2D>().size = new Vector2(0.8f, 0.18f);
         }
     }
 }

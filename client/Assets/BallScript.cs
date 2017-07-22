@@ -30,5 +30,13 @@ public class BallScript : MonoBehaviour {
             ballRigid.velocity = new Vector3(0, 0, 0);
             Debug.Log(ballRigid.velocity);
         }
+        if(coll.transform.tag == "p1net")
+        {
+            ScoreManager.P2ScorePlus();
+        }
+        if (coll.transform.tag == "p2net")
+        {
+            ScoreManager.P1ScorePlus();
+        }
     }
 }

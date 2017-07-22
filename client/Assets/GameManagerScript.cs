@@ -29,23 +29,49 @@ public class GameManagerScript : MonoBehaviour {
 
     float GameTime;
     public static bool firstturn;
+    public static int GameState;
 
 
     // Use this for initialization
     void Start () {
         firstturn = false;
         GameTime = 90.0f;
+        Invoke("GameStart", 1.0f);
     }
-
-    void Update()
+	
+    void GameStart()
     {
-        GameTime -= Time.deltaTime;
-
-        if (GameTime < 0.0f)
-        {
-            GameTime = 90.0f;
-        }
+        GameState = 1;
     }
+	// Update is called once per frame
+	void Update () {
+        if (GameState == 1)
+        {
+            GameTime -= Time.deltaTime;
+
+            if (GameTime < 0.0f)
+            {
+                if (firstturn)
+                {
+                    if (ScoreManager.P1Score > ScoreManager.P2Score)
+                        GameState = 2;
+                    else if (ScoreManager.P1Score == ScoreManager.P2Score)
+                        GameState = 3;
+                    else
+                        GameState = 4;
+                }
+                else
+                {
+
+                    if (ScoreManager.P1Score < ScoreManager.P2Score)
+                        GameState = 2;
+                    else if (ScoreManager.P1Score == ScoreManager.P2Score)
+                        GameState = 3;
+                    else
+                        GameState = 4;
+                }
+            }
+	}
 
     public GameObject GetItemPrefab(int itemType)
     {

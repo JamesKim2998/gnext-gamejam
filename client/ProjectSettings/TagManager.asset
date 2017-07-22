@@ -19,6 +19,8 @@ TagManager:
   - item8
   - item9
   - item10
+  - p1net
+  - p2net
   layers:
   - Default
   - TransparentFX
