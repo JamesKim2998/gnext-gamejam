@@ -69,3 +69,9 @@ public struct SerDeTeam
 {
     public int Team;
 }
+
+[Serializable]
+public struct SerDePlayer
+{
+    public int DeviceId;
+}

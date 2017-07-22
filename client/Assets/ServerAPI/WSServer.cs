@@ -116,4 +116,16 @@ public static class WSServer
         // Debug.Log("SmallNet: " + team);
         Broadcast("SmallNet", JsonUtility.ToJson(new SerDeTeam { Team = team }));
     }
+
+    public static void PlayerPowerUp(int deviceId)
+    {
+        // Debug.Log("SmallNet: " + team);
+        Broadcast("PlayerPowerUp", JsonUtility.ToJson(new SerDePlayer { DeviceId = deviceId }));
+    }
+
+    public static void PlayerGroggy(int deviceId)
+    {
+        // Debug.Log("SmallNet: " + team);
+        Broadcast("PlayerGroggy", JsonUtility.ToJson(new SerDePlayer { DeviceId = deviceId }));
+    }
 }

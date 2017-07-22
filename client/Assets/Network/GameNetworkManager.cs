@@ -3,8 +3,11 @@ using UnityEngine;
 
 public class GameNetworkManager : MonoBehaviour
 {
+    private bool _didRegisteredPlayerBoost;
+
     private void Awake()
     {
+        var gameManager = GetComponent<GameManagerScript>();
         gameObject.AddComponent<NetworkPlayerSpawner>();
         if (WSServer.IsRunning)
             gameObject.AddComponent<ServerGameStateUpdator>();
@@ -17,7 +20,6 @@ public class GameNetworkManager : MonoBehaviour
 
         if (WSServer.IsRunning || Init.DebugStandalone)
         {
-            var gameManager = GetComponent<GameManagerScript>();
             var scoreManager = gameObject.AddComponent<ServerScoreManager>();
             gameManager.Score = scoreManager;
             var ballSimulator = gameManager.Ball.AddComponent<ServerBallSimultor>();
@@ -26,7 +28,6 @@ public class GameNetworkManager : MonoBehaviour
         }
         else
         {
-            var gameManager = GetComponent<GameManagerScript>();
             var scoreManager = gameObject.AddComponent<ClientScoreManager>();
             gameManager.Score = scoreManager;
         }
@@ -39,10 +40,43 @@ public class GameNetworkManager : MonoBehaviour
         {
             gameObject.AddComponent<ClientNetManager>();
         }
+
+        if (WSClient.IsConnected && !Init.DebugStandalone)
+        {
+            _didRegisteredPlayerBoost = true;
+            WSClientBroadcast.PlayerPowerUp += OnPlayerPowerUp;
+            WSClientBroadcast.PlayerGroggy += OnPlayerGroggy;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (_didRegisteredPlayerBoost)
+        {
+            WSClientBroadcast.PlayerPowerUp -= OnPlayerPowerUp;
+            WSClientBroadcast.PlayerGroggy -= OnPlayerGroggy;
+            _didRegisteredPlayerBoost = false;
+        }
     }
 
     private void Update()
     {
         WSClient.HandleAllBroadcast();
+    }
+
+    private void OnPlayerPowerUp(int deviceId)
+    {
+        var gameManager = GetComponent<GameManagerScript>();
+        if (!gameManager.Players.ContainsKey(deviceId)) return;
+        var player = gameManager.Players[deviceId];
+        player.GetComponent<PlayerScript>().PowerTimer();
+    }
+
+    private void OnPlayerGroggy(int deviceId)
+    {
+        var gameManager = GetComponent<GameManagerScript>();
+        if (!gameManager.Players.ContainsKey(deviceId)) return;
+        var player = gameManager.Players[deviceId];
+        player.GetComponent<PlayerScript>().GroggyTimer();
     }
 }

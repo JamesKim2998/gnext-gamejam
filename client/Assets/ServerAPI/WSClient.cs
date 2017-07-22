@@ -205,6 +205,18 @@ public static class WSClient
             if (WSClientBroadcast.BigNet != null)
                 WSClientBroadcast.BigNet(serDe.Team);
         }
+        else if (protocol == "PlayerPowerUp")
+        {
+            var serDe = JsonUtility.FromJson<SerDePlayer>(json);
+            if (WSClientBroadcast.PlayerPowerUp != null)
+                WSClientBroadcast.PlayerPowerUp(serDe.DeviceId);
+        }
+        else if (protocol == "PlayerGroggy")
+        {
+            var serDe = JsonUtility.FromJson<SerDePlayer>(json);
+            if (WSClientBroadcast.PlayerGroggy != null)
+                WSClientBroadcast.PlayerGroggy(serDe.DeviceId);
+        }
         else
         {
             Debug.LogError("Unhandled protocol: " + protocol);

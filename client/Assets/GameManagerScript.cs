@@ -7,6 +7,18 @@ public class GameManagerScript : MonoBehaviour
 {
     public Dictionary<int, GameObject> Players = new Dictionary<int, GameObject>();
 
+    public int? MyTeam
+    {
+        get
+        {
+            GameObject player;
+            if (!Players.TryGetValue(WSConfig.DeviceId, out player))
+                return null;
+            var queue = player.GetComponent<PlayerQueue>().Value;
+            return queue % 2;
+        }
+    }
+
     [Header("Ball")]
     public GameObject Ball;
 
@@ -26,7 +38,6 @@ public class GameManagerScript : MonoBehaviour
     public ScoreView ScoreView;
     public TimerView TimerView;
     public NetManager NetManager;
-    public static bool firstturn;
     public static int GameState;
 
     public GameObject WinButton;
@@ -43,7 +54,6 @@ public class GameManagerScript : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        firstturn = false;
         Invoke("GameStart", 1.0f);
         finish = false;
     }
@@ -51,6 +61,7 @@ public class GameManagerScript : MonoBehaviour
     void GameStart()
     {
         GameState = 1;
+        ScoreView.Swap = MyTeam == 1;
     }
 
     //판넬 키는 부분
