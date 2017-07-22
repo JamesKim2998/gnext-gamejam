@@ -24,7 +24,7 @@ public struct PlayerState
 public class GameState
 {
     public Vector2 BallPosition;
-    public readonly List<PlayerState> PlayersState = new List<PlayerState>();
+    public List<PlayerState> PlayersState = new List<PlayerState>();
     public GameState Clone()
     {
         var ret = new GameState

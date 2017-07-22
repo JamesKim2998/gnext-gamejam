@@ -3,7 +3,7 @@ using WebSocketSharp;
 
 public static class WSClientState
 {
-    public static GameState GameState;
+    public static GameState GameState = new GameState();
 }
 
 public static class WSClient
