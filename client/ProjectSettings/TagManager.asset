@@ -11,6 +11,12 @@ TagManager:
   - item1
   - item2
   - enemy
+  - item3
+  - item4
+  - item5
+  - item6
+  - item7
+  - item8
   layers:
   - Default
   - TransparentFX
