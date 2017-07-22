@@ -10,7 +10,7 @@ public class GameNetworkManager : MonoBehaviour
             gameObject.AddComponent<ServerGameStateUpdator>();
         if (WSServer.IsRunning || Init.DebugStandalone)
             gameObject.AddComponent<ServerItemSpawner>();
-        if (!WSServer.IsRunning)
+        if (!WSServer.IsRunning && !Init.DebugStandalone)
             gameObject.AddComponent<ClientGameStateLoader>();
         if (!WSServer.IsRunning && !Init.DebugStandalone)
             gameObject.AddComponent<ClientItemSpawner>();
