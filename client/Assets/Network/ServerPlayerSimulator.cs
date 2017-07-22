@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class ServerPlayerSimulator : MonoBehaviour
@@ -6,6 +7,9 @@ public class ServerPlayerSimulator : MonoBehaviour
     private PlayerScript Player;
     private Rigidbody2D body;
     public float speed = 6.0f;
+
+    public Action<int> OnEatSmallNetItem;
+    public Action<int> OnEatBigNetItem;
 
     private void Awake()
     {
@@ -90,17 +94,17 @@ public class ServerPlayerSimulator : MonoBehaviour
             body.drag = 0.0f;
         }
 
-        // TODO
         if (collision.transform.tag == "item9")
         {
-            StartCoroutine("SmallNet");
+            if (OnEatSmallNetItem != null)
+                OnEatSmallNetItem(DeviceId);
             Destroy(collision.gameObject);
         }
 
-        // TODO
         if (collision.transform.tag == "item10")
         {
-            StartCoroutine("BigNet");
+            if (OnEatBigNetItem != null)
+                OnEatSmallNetItem(DeviceId);
             Destroy(collision.gameObject);
         }
     }

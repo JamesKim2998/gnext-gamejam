@@ -61,3 +61,9 @@ public struct SerDeScore
     public int ScoreP1;
     public int ScoreP2;
 }
+
+[Serializable]
+public struct SerDeTeam
+{
+    public int Team;
+}

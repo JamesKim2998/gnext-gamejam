@@ -189,6 +189,18 @@ public static class WSClient
             if (WSClientBroadcast.ChangeScore != null)
                 WSClientBroadcast.ChangeScore(serDe);
         }
+        else if (protocol == "SmallNet")
+        {
+            var serDe = JsonUtility.FromJson<SerDeTeam>(json);
+            if (WSClientBroadcast.SmallNet != null)
+                WSClientBroadcast.SmallNet(serDe.Team);
+        }
+        else if (protocol == "BigNet")
+        {
+            var serDe = JsonUtility.FromJson<SerDeTeam>(json);
+            if (WSClientBroadcast.BigNet != null)
+                WSClientBroadcast.BigNet(serDe.Team);
+        }
         else
         {
             Debug.LogError("Unhandled protocol: " + protocol);

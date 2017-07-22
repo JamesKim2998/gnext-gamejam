@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class NetManager : MonoBehaviour
 {
-    GameObject nets;
-    GameObject nets2;
+    public GameObject nets;
+    public GameObject nets2;
 
     public Sprite DS;
     public Sprite DM;
@@ -14,17 +14,15 @@ public class NetManager : MonoBehaviour
     public Sprite UM;
     public Sprite UL;
 
-    void Awake()
+    public void SmallNet(int team)
     {
-        nets = GameObject.Find("net");
-        nets2 = GameObject.Find("net2");
+        StartCoroutine(CoSmallNet(team));
     }
 
-    IEnumerator SmallNet()
+    private IEnumerator CoSmallNet(int team)
     {
-        if (GameManagerScript.firstturn)
+        if (team == 0)
         {
-            nets = GameObject.Find("net");
             nets.GetComponent<SpriteRenderer>().sprite = DS;
             nets.GetComponent<BoxCollider2D>().size = new Vector2(0.6f, 0.18f);
             yield return new WaitForSeconds(5.0f);
@@ -33,7 +31,6 @@ public class NetManager : MonoBehaviour
         }
         else
         {
-            nets2 = GameObject.Find("net2");
             nets2.GetComponent<SpriteRenderer>().sprite = US;
             nets2.GetComponent<BoxCollider2D>().size = new Vector2(0.6f, 0.18f);
             yield return new WaitForSeconds(5.0f);
@@ -42,11 +39,15 @@ public class NetManager : MonoBehaviour
         }
     }
 
-    IEnumerator BigNet()
+    public void BigNet(int team)
     {
-        if (GameManagerScript.firstturn)
+        StartCoroutine(CoBigNet(team));
+    }
+
+    private IEnumerator CoBigNet(int team)
+    {
+        if (team == 0)
         {
-            nets2 = GameObject.Find("net2");
             nets2.GetComponent<SpriteRenderer>().sprite = UL;
             nets2.GetComponent<BoxCollider2D>().size = new Vector2(1.1f, 0.18f);
             yield return new WaitForSeconds(5.0f);
@@ -55,7 +56,6 @@ public class NetManager : MonoBehaviour
         }
         else
         {
-            nets = GameObject.Find("net");
             nets.GetComponent<SpriteRenderer>().sprite = DL;
             nets.GetComponent<BoxCollider2D>().size = new Vector2(1.1f, 0.18f);
             yield return new WaitForSeconds(5.0f);

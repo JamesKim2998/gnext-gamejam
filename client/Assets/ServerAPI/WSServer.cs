@@ -105,4 +105,16 @@ public static class WSServer
         Debug.Log("Score: " + serDe.ScoreP1 + " : " + serDe.ScoreP2);
         Broadcast("ChangeScore", JsonUtility.ToJson(serDe));
     }
+
+    public static void BigNet(int team)
+    {
+        Debug.Log("BigNet: " + team);
+        Broadcast("BigNet", JsonUtility.ToJson(new SerDeTeam { Team = team }));
+    }
+
+    public static void SmallNet(int team)
+    {
+        Debug.Log("SmallNet: " + team);
+        Broadcast("SmallNet", JsonUtility.ToJson(new SerDeTeam { Team = team }));
+    }
 }

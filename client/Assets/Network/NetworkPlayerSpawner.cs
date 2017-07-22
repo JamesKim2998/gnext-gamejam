@@ -51,6 +51,10 @@ public class NetworkPlayerSpawner : MonoBehaviour
         go.transform.position = pos;
         var serverPlayer = go.AddComponent<ServerPlayerSimulator>();
         serverPlayer.DeviceId = deviceId;
+        var team = queue % 2;
+        var netManager = _gameManager.GetComponent<ServerNetManager>();
+        serverPlayer.OnEatSmallNetItem += playerDeviceId => netManager.SmallNet(team);
+        serverPlayer.OnEatBigNetItem += playerDeviceId => netManager.BigNet(team);
         var playerQueue = go.AddComponent<PlayerQueue>();
         playerQueue.Value = queue;
         go.GetComponent<PlayerScript>().PlayerHPValue = 100;
@@ -104,6 +108,9 @@ public class NetworkPlayerSpawner : MonoBehaviour
         {
             var serverPlayer = myPlayer.AddComponent<ServerPlayerSimulator>();
             serverPlayer.DeviceId = WSConfig.DeviceId;
+            var netManager = _gameManager.GetComponent<ServerNetManager>();
+            serverPlayer.OnEatSmallNetItem += playerDeviceId => netManager.SmallNet(0);
+            serverPlayer.OnEatBigNetItem += playerDeviceId => netManager.BigNet(0);
         }
     }
 }

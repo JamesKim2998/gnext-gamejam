@@ -30,6 +30,15 @@ public class GameNetworkManager : MonoBehaviour
             var scoreManager = gameObject.AddComponent<ClientScoreManager>();
             gameManager.Score = scoreManager;
         }
+
+        if (WSServer.IsRunning || Init.DebugStandalone)
+        {
+            gameObject.AddComponent<ServerNetManager>();
+        }
+        else
+        {
+            gameObject.AddComponent<ClientNetManager>();
+        }
     }
 
     private void Update()

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311992, g: 0.38074034, b: 0.35872713, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311947, g: 0.38074005, b: 0.35872722, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -646,6 +646,7 @@ GameObject:
   - component: {fileID: 636357401}
   - component: {fileID: 636357400}
   - component: {fileID: 636357402}
+  - component: {fileID: 636357403}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -675,6 +676,7 @@ MonoBehaviour:
   Item9: {fileID: 1525544126448348, guid: 1d1f9b5644341954da44f141c366306f, type: 2}
   Item10: {fileID: 1147758473235958, guid: cc3737f54326c73449129feaaf3b6b19, type: 2}
   ScoreView: {fileID: 684637228}
+  NetManager: {fileID: 636357403}
 --- !u!4 &636357401
 Transform:
   m_ObjectHideFlags: 0
@@ -699,6 +701,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf69bd0515ba04c23ae8cbb344afe03b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &636357403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 636357399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e32e8c47c767f446d8d347ad1940f128, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nets: {fileID: 92586313}
+  nets2: {fileID: 1804354302}
+  DS: {fileID: 21300000, guid: 582aad53bd2b5b04eb9a0d0b2dd8ff40, type: 3}
+  DM: {fileID: 21300000, guid: 3030125f4b8fb6d4db5ca64bf93d5731, type: 3}
+  DL: {fileID: 21300000, guid: bd21242be4ad9c0488c7f8f86cf478e0, type: 3}
+  US: {fileID: 21300000, guid: e0950dd137eccf34799449250c7e8dcd, type: 3}
+  UM: {fileID: 21300000, guid: 901c4f019abfb1f42a40d9e9c31cd193, type: 3}
+  UL: {fileID: 21300000, guid: 0d90b0dbf7bdd7b4baf3903efa3118dc, type: 3}
 --- !u!1 &654840733
 GameObject:
   m_ObjectHideFlags: 0
@@ -1011,7 +1032,6 @@ Transform:
   m_Children:
   - {fileID: 1112871126}
   - {fileID: 636357401}
-  - {fileID: 1026326314}
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1143,52 +1163,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 965963691}
---- !u!1 &1026326312
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1026326314}
-  - component: {fileID: 1026326313}
-  m_Layer: 0
-  m_Name: NetManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1026326313
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1026326312}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e32e8c47c767f446d8d347ad1940f128, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DS: {fileID: 21300000, guid: 582aad53bd2b5b04eb9a0d0b2dd8ff40, type: 3}
-  DM: {fileID: 21300000, guid: 3030125f4b8fb6d4db5ca64bf93d5731, type: 3}
-  DL: {fileID: 21300000, guid: bd21242be4ad9c0488c7f8f86cf478e0, type: 3}
-  US: {fileID: 21300000, guid: e0950dd137eccf34799449250c7e8dcd, type: 3}
-  UM: {fileID: 21300000, guid: 901c4f019abfb1f42a40d9e9c31cd193, type: 3}
-  UL: {fileID: 21300000, guid: 0d90b0dbf7bdd7b4baf3903efa3118dc, type: 3}
---- !u!4 &1026326314
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1026326312}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 758802413}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1112871123
 GameObject:
   m_ObjectHideFlags: 0

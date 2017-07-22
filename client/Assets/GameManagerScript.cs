@@ -23,6 +23,7 @@ public class GameManagerScript : MonoBehaviour {
     float GameTime;
     public IScoreProvider Score = new ZeroScoreProvider();
     public ScoreView ScoreView;
+    public NetManager NetManager;
     public static bool firstturn;
     public static int GameState;
 
