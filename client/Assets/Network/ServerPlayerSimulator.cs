@@ -106,7 +106,7 @@ public class ServerPlayerSimulator : MonoBehaviour
         if (collision.transform.tag == "item10")
         {
             if (OnEatBigNetItem != null)
-                OnEatSmallNetItem(DeviceId);
+                OnEatBigNetItem(DeviceId);
             Destroy(collision.gameObject);
         }
     }
