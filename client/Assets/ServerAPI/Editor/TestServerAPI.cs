@@ -24,6 +24,14 @@ public class TestServerAPI : EditorWindow
             CheckRequest(ServerAPI.GetGameState());
         if (GUILayout.Button("UpdateGameState"))
             CheckRequest(ServerAPI.UpdateGameState("{\"ball\":[0,0]}"));
+        GUILayout.Space(32);
+
+        if (GUILayout.Button("WS Server Start"))
+            WSServer.Start();
+        if (GUILayout.Button("WS Server Stop"))
+            WSServer.Stop();
+        if (GUILayout.Button("WS Connect"))
+            WSClient.Connect();
     }
 
     private void CheckRequest(UnityWebRequest r)
