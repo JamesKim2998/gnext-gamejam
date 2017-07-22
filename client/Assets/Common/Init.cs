@@ -4,11 +4,7 @@ using UnityEngine;
 
 public class Init : MonoBehaviour
 {
-#if UNITY_EDITOR
     public static bool DebugStandalone = true;
-#else
-    public static bool DebugStandalone = false;
-#endif
 
 #if !UNITY_EDITOR && UNITY_STANDALONE_OSX
     public static bool IsClient = false;
