@@ -33,10 +33,12 @@ public class BallScript : MonoBehaviour {
         if(coll.transform.tag == "p1net")
         {
             ScoreManager.P2ScorePlus();
+            GameObject.Find("ScoreManager").GetComponent<ScoreManager>().ScoreChange();
         }
         if (coll.transform.tag == "p2net")
         {
             ScoreManager.P1ScorePlus();
+            GameObject.Find("ScoreManager").GetComponent<ScoreManager>().ScoreChange();
         }
     }
 }
