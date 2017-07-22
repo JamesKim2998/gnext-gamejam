@@ -27,6 +27,7 @@ public struct PlayerState
 public class GameState
 {
     public int FrameCount;
+    public float GameTime = 90;
     public Vector2 BallPosition;
     public Vector2 BallVelocity;
     public List<PlayerState> PlayersState = new List<PlayerState>();

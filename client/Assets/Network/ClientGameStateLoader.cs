@@ -22,8 +22,10 @@ public class ClientGameStateLoader : MonoBehaviour
         if (frameDelta <= 0) return;
         WSClientState.GameState.FrameCount = _lastFrameCount;
 
-        // ball
         var gameState = WSClientState.GameState;
+        _gameManager.ServerGameTime = gameState.GameTime;
+
+        // ball
         _gameManager.Ball.transform.position = gameState.BallPosition;
         _gameManager.Ball.GetComponent<Rigidbody2D>().velocity = gameState.BallVelocity;
 

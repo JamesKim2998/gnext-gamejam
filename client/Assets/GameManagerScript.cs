@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameManagerScript : MonoBehaviour {
-
+public class GameManagerScript : MonoBehaviour
+{
     public Dictionary<int, GameObject> Players = new Dictionary<int, GameObject>();
 
     [Header("Ball")]
@@ -21,9 +21,10 @@ public class GameManagerScript : MonoBehaviour {
     public GameObject Item9;
     public GameObject Item10;
 
-    float GameTime;
+    public float ServerGameTime = 90;
     public IScoreProvider Score = new ZeroScoreProvider();
     public ScoreView ScoreView;
+    public TimerView TimerView;
     public NetManager NetManager;
     public static bool firstturn;
     public static int GameState;
@@ -40,26 +41,27 @@ public class GameManagerScript : MonoBehaviour {
 
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         firstturn = false;
-        GameTime = 90.0f;
         Invoke("GameStart", 1.0f);
         finish = false;
-
     }
-	
+
     void GameStart()
     {
         GameState = 1;
     }
-    //판넬 키는 부분
-    void Update () {
-        ScoreView.Set(Score.P1Score, Score.P2Score);
 
-        GameTime -= Time.deltaTime;
+    //판넬 키는 부분
+    void Update()
+    {
+        ScoreView.Set(Score.P1Score, Score.P2Score);
+        TimerView.Set((int)ServerGameTime);
+
         if (finish == false)
         {
-            if (GameTime < 0.0f || Score.P1Score == 10 || Score.P2Score == 10)
+            if (ServerGameTime < 0.0f || Score.P1Score == 10 || Score.P2Score == 10)
             {
                 GameObject.Find("Panel").SetActive(true);
                 if (Score.P1Score > Score.P2Score)
@@ -82,7 +84,7 @@ public class GameManagerScript : MonoBehaviour {
                 }
             }
         }
-	}
+    }
 
     public GameObject GetItemPrefab(int itemType)
     {
