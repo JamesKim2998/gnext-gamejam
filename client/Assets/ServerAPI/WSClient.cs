@@ -59,7 +59,7 @@ public static class WSClient
         _broadcast = new WebSocket(serverAddr + "Broadcast");
         _broadcast.OnMessage += (sender, e) =>
         {
-            Debug.Log("Broadcast: " + e.Data);
+            // Debug.Log("Broadcast: " + e.Data);
             var protocolEnd = e.Data.IndexOf('{');
             var protocol = e.Data.Substring(0, protocolEnd);
             var json = e.Data.Substring(protocolEnd);

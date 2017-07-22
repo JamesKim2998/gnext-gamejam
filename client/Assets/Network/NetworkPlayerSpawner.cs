@@ -46,7 +46,9 @@ public class NetworkPlayerSpawner : MonoBehaviour
         if (_gameManager.Players.ContainsKey(deviceId))
             return _gameManager.Players[deviceId];
         var go = InstantitatePlayer(queue);
-        go.transform.position = _instantiatePositions[queue % _instantiatePositions.Length];
+        Vector3 pos = _instantiatePositions[queue % _instantiatePositions.Length];
+        pos.z = -1;
+        go.transform.position = pos;
         var serverPlayer = go.AddComponent<ServerPlayerSimulator>();
         serverPlayer.DeviceId = deviceId;
         var playerQueue = go.AddComponent<PlayerQueue>();

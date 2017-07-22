@@ -37,6 +37,7 @@ public class ClientGameStateLoader : MonoBehaviour
 
     public static void LoadPlayer(GameObject player, PlayerState playerState)
     {
-        player.transform.position = playerState.Position;
+        var pos = playerState.Position;
+        player.transform.position = new Vector3(pos.x, pos.y, -1);
     }
 }
