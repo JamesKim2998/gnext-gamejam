@@ -71,6 +71,7 @@ public class GameManagerScript : MonoBehaviour {
                         GameState = 4;
                 }
             }
+        }
 	}
 
     public GameObject GetItemPrefab(int itemType)
