@@ -44,7 +44,12 @@ public class PlayerScript : MonoBehaviour
         PlayerHp.transform.position = this.transform.position + offset;
     }
 
-    IEnumerator PowerTimer()
+    public void PowerTimer()
+    {
+        StartCoroutine(CoPowerTimer());
+    }
+
+    private IEnumerator CoPowerTimer()
     {
         Debug.Log("powerco");
         power = 9.0f;
@@ -54,12 +59,16 @@ public class PlayerScript : MonoBehaviour
         SpinSpeed = -10.0f;
     }
 
-    IEnumerator SpeedTimer()
+    public void SpeedTimer()
+    {
+        StartCoroutine(CoSpeedTimer());
+    }
+
+    private IEnumerator CoSpeedTimer()
     {
         Debug.Log("speedco");
         speed = 10.0f;
         yield return new WaitForSeconds(5.0f);
         speed = 6.0f;
     }
-
 }

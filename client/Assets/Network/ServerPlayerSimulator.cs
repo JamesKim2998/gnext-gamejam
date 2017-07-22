@@ -66,12 +66,12 @@ public class ServerPlayerSimulator : MonoBehaviour
         if (collision.transform.tag == "item3")
         {
             Destroy(collision.gameObject);
-            StartCoroutine("PowerTimer");
+            Player.PowerTimer();
         }
         if (collision.transform.tag == "item4")
         {
             Destroy(collision.gameObject);
-            StartCoroutine("SpeedTimer");
+            Player.SpeedTimer();
         }
         if (collision.transform.tag == "item5")
         {
