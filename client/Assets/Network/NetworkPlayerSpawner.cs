@@ -81,16 +81,6 @@ public class NetworkPlayerSpawner : MonoBehaviour
         go.GetComponent<PlayerScript>().PlayerHPValue = playerState.Hp;
         var queue = go.AddComponent<PlayerQueue>();
         queue.Value = playerState.Queue;
-        if (ownerDeviceId == WSConfig.DeviceId)
-        {
-            go.AddComponent<ClientPlayerInputHandler>();
-            // TODO: 옮길것.
-            var team = playerState.Queue % 2;
-            var angleZ = team == 0 ? 0 : 180;
-            var cam = GameObject.Find("Main Camera");
-            if (cam == null) Debug.LogError("cam is null");
-            else cam.transform.localEulerAngles = new Vector3(0, 0, angleZ);
-        }
         _gameManager.Players[ownerDeviceId] = go;
         return go;
     }
