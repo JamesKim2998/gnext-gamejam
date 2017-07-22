@@ -14,6 +14,8 @@ public class PlayerScript : MonoBehaviour {
     public static float SpinSpeed;
     public TCKDPad Pad;
 
+    GameObject nets;
+    GameObject nets2;
     float PowerTime;
     float SpeedTime;
 
@@ -25,6 +27,8 @@ public class PlayerScript : MonoBehaviour {
         SpinSpeed = -10.0f;
         PlayerHp = Instantiate(HpBar, new Vector3(540, 350, 0), Quaternion.identity, UICanvas.transform);
         PlayerHp.transform.SetParent(UICanvas.transform, false);
+        nets = GameObject.Find("net");
+        nets2 = GameObject.Find("net2");
     }
 	
 	// Update is called once per frame
@@ -104,11 +108,13 @@ public class PlayerScript : MonoBehaviour {
         if (collision.transform.tag == "item9")
         {
             StartCoroutine("SmallNet");
+            collision.gameObject.SetActive(false);
         }
 
         if (collision.transform.tag == "item10")
         {
             StartCoroutine("BigNet");
+            collision.gameObject.SetActive(false);
         }
     }
 
@@ -146,39 +152,37 @@ public class PlayerScript : MonoBehaviour {
 
     IEnumerator SmallNet()
     {
-        GameObject nets;
         if (GameManagerScript.firstturn)
         {
             nets = GameObject.Find("net");
-            nets.transform.localScale = new Vector3(0.5f, 1, 1);
+            nets.transform.localScale = new Vector3(1000.0f, 1000.0f, 1);
             yield return new WaitForSeconds(5.0f);
-            nets.transform.localScale = new Vector3(1, 1, 1);
+            nets.transform.localScale = new Vector3(2000.0f, 1000.0f, 1);
         }
         else
         {
-            nets = GameObject.Find("net2");
-            nets.transform.localScale = new Vector3(2, 1, 1);
+            nets2 = GameObject.Find("net2");
+            nets2.transform.localScale = new Vector3(1000.0f, 1000.0f, 1);
             yield return new WaitForSeconds(5.0f);
-            nets.transform.localScale = new Vector3(0.5f, 1, 1);
+            nets2.transform.localScale = new Vector3(2000.0f, 1000.0f, 1);
         }
     }
 
     IEnumerator BigNet()
     {
-        GameObject nets;
         if (GameManagerScript.firstturn)
         {
-            nets = GameObject.Find("net2");
-            nets.transform.localScale = new Vector3(2, 1, 1);
+            nets2 = GameObject.Find("net2");
+            nets2.transform.localScale = new Vector3(4000.0f, 1000.0f, 1);
             yield return new WaitForSeconds(5.0f);
-            nets.transform.localScale = new Vector3(1, 1, 1);
+            nets2.transform.localScale = new Vector3(2000.0f, 1000.0f, 1);
         }
         else
         {
-            nets = GameObject.Find("net1");
-            nets.transform.localScale = new Vector3(2, 1, 1);
+            nets = GameObject.Find("net");
+            nets.transform.localScale = new Vector3(4000.0f, 1000.0f, 1);
             yield return new WaitForSeconds(5.0f);
-            nets.transform.localScale = new Vector3(1, 1, 1);
+            nets.transform.localScale = new Vector3(2000.0f, 1000.0f, 1);
         }
     }
 }
