@@ -35,6 +35,13 @@ public class PlayerScript : MonoBehaviour
     {
         this.transform.Rotate(new Vector3(0, 0, SpinSpeed));
         PlayerHp.GetComponent<Slider>().value = PlayerHPValue;
+
+        var team = GetComponent<PlayerQueue>().Value % 2;
+        var offset = Vector3.zero;
+        var offsetAbs = 100;
+        if (team == 0) offset.y = -offsetAbs;
+        else offset.y = offsetAbs;
+        PlayerHp.transform.position = this.transform.position + offset;
     }
 
     IEnumerator PowerTimer()
