@@ -14,6 +14,7 @@ public class PlayerScript : MonoBehaviour
     Rigidbody2D body;
     public static float speed;
     public static float SpinSpeed;
+    Animator PlayerAnimator;
 
     float PowerTime;
     float SpeedTime;
@@ -21,10 +22,12 @@ public class PlayerScript : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        PlayerAnimator = GetComponent<Animator>();
+        PlayerAnimator.SetBool("PowerUp", false);
         body = GetComponent<Rigidbody2D>();
         UICanvas = GameObject.Find("Canvas").GetComponent<Canvas>();
-        power = 4.0f;
-        speed = 6.0f;
+        power = 5.0f;
+        speed = 9.0f;
         SpinSpeed = -10.0f;
         PlayerHp = Instantiate(HpBar, new Vector3(540, 350, 0), Quaternion.identity, UICanvas.transform);
         PlayerHp.transform.SetParent(UICanvas.transform, false);
@@ -51,10 +54,12 @@ public class PlayerScript : MonoBehaviour
 
     private IEnumerator CoPowerTimer()
     {
+        PlayerAnimator.SetBool("PowerUp", true);
         Debug.Log("powerco");
-        power = 9.0f;
+        power = 12.0f;
         SpinSpeed = -30.0f;
         yield return new WaitForSeconds(5.0f);
+        PlayerAnimator.SetBool("PowerUp", false);
         power = 4.0f;
         SpinSpeed = -10.0f;
     }
@@ -67,8 +72,8 @@ public class PlayerScript : MonoBehaviour
     private IEnumerator CoSpeedTimer()
     {
         Debug.Log("speedco");
-        speed = 10.0f;
+        speed = 14.0f;
         yield return new WaitForSeconds(5.0f);
-        speed = 6.0f;
+        speed = 9.0f;
     }
 }
