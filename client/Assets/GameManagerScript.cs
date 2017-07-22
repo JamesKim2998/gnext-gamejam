@@ -74,24 +74,22 @@ public class GameManagerScript : MonoBehaviour
         {
             if (ServerGameTime < 0.0f || Score.P1Score == 10 || Score.P2Score == 10)
             {
+                finish = true;
                 GameObject.Find("Panel").SetActive(true);
                 if (Score.P1Score > Score.P2Score)
                 {
                     ManWin.SetActive(true);
                     GirlLose.SetActive(true);
-                    finish = true;
                 }
                 else if (Score.P1Score == Score.P2Score)
                 {
                     ManLose.SetActive(true);
                     GirlLose.SetActive(true);
-                    finish = true;
                 }
                 else
                 {
                     ManLose.SetActive(true);
                     GirlWin.SetActive(true);
-                    finish = true;
                 }
             }
         }

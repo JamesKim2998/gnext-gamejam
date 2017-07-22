@@ -17,7 +17,7 @@ public class ServerPlayerSimulator : MonoBehaviour
         body = GetComponent<Rigidbody2D>();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         var playerInput = default(PlayerInput);
         foreach (var somePlayerInput in WSServerState.PlayerInputs)

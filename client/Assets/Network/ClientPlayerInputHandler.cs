@@ -10,6 +10,7 @@ public class ClientPlayerInputHandler : MonoBehaviour
     {
         PlayerChecker = GameObject.Find("PlayerChecker");
     }
+
     private void Update()
     {
         WSClient.UpdatePlayerInput(new PlayerInput()

@@ -6,9 +6,6 @@ using UnityEngine.UI;
 public class PlayerScript : MonoBehaviour
 {
     public float power;
-    Canvas UICanvas;
-
-    Rigidbody2D body;
     public static float speed;
     public static float SpinSpeed;
     Animator PlayerAnimator;
@@ -22,8 +19,6 @@ public class PlayerScript : MonoBehaviour
         PlayerAnimator = GetComponent<Animator>();
         PlayerAnimator.SetBool("PowerUp", false);
         PlayerAnimator.SetBool("Groggy", false);
-        body = GetComponent<Rigidbody2D>();
-        UICanvas = GameObject.Find("Canvas").GetComponent<Canvas>();
         power = 5.0f;
         speed = 12.0f;
         SpinSpeed = -10.0f;
@@ -33,10 +28,7 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        this.transform.Rotate(new Vector3(0, 0, SpinSpeed));
-
-
-        var team = GetComponent<PlayerQueue>().Value % 2;
+        this.transform.Rotate(new Vector3(0, 0, SpinSpeed * Time.deltaTime * 60));
     }
 
     public void PowerTimer()
