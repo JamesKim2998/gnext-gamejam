@@ -12,7 +12,7 @@ public class ScoreManager : MonoBehaviour {
     static GameObject score2;
     Canvas UICanvas;
 
-    static public Sprite[] NumSprite = new Sprite[10];
+    public Sprite[] NumSprite = new Sprite[10];
     // Use this for initialization
     void Start () {
         P1Score = 0;
