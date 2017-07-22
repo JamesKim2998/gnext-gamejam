@@ -81,6 +81,8 @@ public class NetworkPlayerSpawner : MonoBehaviour
         go.GetComponent<PlayerScript>().PlayerHPValue = playerState.Hp;
         var queue = go.AddComponent<PlayerQueue>();
         queue.Value = playerState.Queue;
+        if (ownerDeviceId == WSConfig.DeviceId)
+            go.AddComponent<ClientPlayerInputHandler>();
         _gameManager.Players[ownerDeviceId] = go;
         return go;
     }
