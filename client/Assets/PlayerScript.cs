@@ -6,10 +6,8 @@ using UnityEngine.UI;
 public class PlayerScript : MonoBehaviour
 {
     public float power;
-    public GameObject HpBar;
     Canvas UICanvas;
-    public float PlayerHPValue;
-    GameObject PlayerHp;
+
     Rigidbody2D body;
     public static float speed;
     public static float SpinSpeed;
@@ -23,27 +21,22 @@ public class PlayerScript : MonoBehaviour
     {
         PlayerAnimator = GetComponent<Animator>();
         PlayerAnimator.SetBool("PowerUp", false);
+        PlayerAnimator.SetBool("Groggy", false);
         body = GetComponent<Rigidbody2D>();
         UICanvas = GameObject.Find("Canvas").GetComponent<Canvas>();
         power = 5.0f;
         speed = 12.0f;
         SpinSpeed = -10.0f;
-        PlayerHp = Instantiate(HpBar, new Vector3(540, 350, 0), Quaternion.identity, UICanvas.transform);
-        PlayerHp.transform.SetParent(UICanvas.transform, false);
+
     }
 
     // Update is called once per frame
     void Update()
     {
         this.transform.Rotate(new Vector3(0, 0, SpinSpeed));
-        PlayerHp.GetComponent<Slider>().value = PlayerHPValue;
+
 
         var team = GetComponent<PlayerQueue>().Value % 2;
-        var offset = Vector3.zero;
-        var offsetAbs = 100;
-        if (team == 0) offset.y = -offsetAbs;
-        else offset.y = offsetAbs;
-        PlayerHp.transform.position = this.transform.position + offset;
     }
 
     public void PowerTimer()
@@ -74,5 +67,21 @@ public class PlayerScript : MonoBehaviour
         speed = 18.0f;
         yield return new WaitForSeconds(5.0f);
         speed = 12.0f;
+    }
+
+    public void GroggyTimer()
+    {
+        StartCoroutine(CoGroggyTimer());
+    }
+
+    private IEnumerator CoGroggyTimer()
+    {
+        GameObject.Find("Canvas").GetComponent<TouchScreen>().enabled = false;
+        PlayerAnimator.SetBool("Groggy", true);
+        SpinSpeed = 0.0f;
+        yield return new WaitForSeconds(1.7f);
+        GameObject.Find("Canvas").GetComponent<TouchScreen>().enabled = true;
+        PlayerAnimator.SetBool("Groggy", false);
+        SpinSpeed = -10.0f;
     }
 }

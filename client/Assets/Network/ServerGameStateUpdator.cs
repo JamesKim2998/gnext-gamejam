@@ -33,7 +33,6 @@ public class ServerGameStateUpdator : MonoBehaviour
                 Queue = kv.Value.GetComponent<PlayerQueue>().Value,
                 Position = kv.Value.transform.position,
                 Velocity = kv.Value.GetComponent<Rigidbody2D>().velocity,
-                Hp = kv.Value.GetComponent<PlayerScript>().PlayerHPValue,
             });
         }
     }

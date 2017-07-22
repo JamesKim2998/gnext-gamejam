@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManagerScript : MonoBehaviour {
 
@@ -27,45 +28,57 @@ public class GameManagerScript : MonoBehaviour {
     public static bool firstturn;
     public static int GameState;
 
+    public GameObject WinButton;
+    public GameObject LoseButton;
+    public GameObject DrawButton;
+
+    public GameObject ManWin;
+    public GameObject GirlWin;
+    public GameObject ManLose;
+    public GameObject GirlLose;
+    bool finish;
+
 
     // Use this for initialization
     void Start () {
         firstturn = false;
         GameTime = 90.0f;
         Invoke("GameStart", 1.0f);
+        finish = false;
+
     }
 	
     void GameStart()
     {
         GameState = 1;
     }
-
+    //판넬 키는 부분
     void Update () {
         ScoreView.Set(Score.P1Score, Score.P2Score);
-        if (GameState == 1)
-        {
-            GameTime -= Time.deltaTime;
 
-            if (GameTime < 0.0f)
+        GameTime -= Time.deltaTime;
+        if (finish == false)
+        {
+            if (GameTime < 0.0f || Score.P1Score == 10 || Score.P2Score == 10)
             {
-                if (firstturn)
+                GameObject.Find("Panel").SetActive(true);
+                if (Score.P1Score > Score.P2Score)
                 {
-                    if (Score.P1Score > Score.P2Score)
-                        GameState = 2;
-                    else if (Score.P1Score == Score.P2Score)
-                        GameState = 3;
-                    else
-                        GameState = 4;
+                    ManWin.SetActive(true);
+                    GirlLose.SetActive(true);
+                    finish = true;
+                }
+                else if (Score.P1Score == Score.P2Score)
+                {
+                    ManLose.SetActive(true);
+                    GirlLose.SetActive(true);
+                    finish = true;
                 }
                 else
                 {
-
-                    if (Score.P1Score < Score.P2Score)
-                        GameState = 2;
-                    else if (Score.P1Score == Score.P2Score)
-                        GameState = 3;
-                    else
-                        GameState = 4;
+                    ManLose.SetActive(true);
+                    GirlWin.SetActive(true);
+                    finish = true;
                 }
             }
         }

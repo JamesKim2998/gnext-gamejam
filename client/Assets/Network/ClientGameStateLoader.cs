@@ -50,6 +50,5 @@ public class ClientGameStateLoader : MonoBehaviour
         player.transform.position = newPosition;
 
         player.GetComponent<Rigidbody2D>().velocity = playerState.Velocity;
-        player.GetComponent<PlayerScript>().PlayerHPValue = playerState.Hp;
     }
 }

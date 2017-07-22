@@ -57,8 +57,6 @@ public class NetworkPlayerSpawner : MonoBehaviour
         serverPlayer.OnEatBigNetItem += playerDeviceId => netManager.BigNet(team);
         var playerQueue = go.AddComponent<PlayerQueue>();
         playerQueue.Value = queue;
-        go.GetComponent<PlayerScript>().PlayerHPValue = 100;
-        _gameManager.Players[deviceId] = serverPlayer.gameObject;
         return go;
     }
 
@@ -78,7 +76,6 @@ public class NetworkPlayerSpawner : MonoBehaviour
         pos.z = -1;
         go.transform.position = pos;
         go.GetComponent<Rigidbody2D>().velocity = playerState.Velocity;
-        go.GetComponent<PlayerScript>().PlayerHPValue = playerState.Hp;
         var queue = go.AddComponent<PlayerQueue>();
         queue.Value = playerState.Queue;
         if (ownerDeviceId == WSConfig.DeviceId)
