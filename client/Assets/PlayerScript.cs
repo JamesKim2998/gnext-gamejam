@@ -26,7 +26,7 @@ public class PlayerScript : MonoBehaviour
         body = GetComponent<Rigidbody2D>();
         UICanvas = GameObject.Find("Canvas").GetComponent<Canvas>();
         power = 5.0f;
-        speed = 9.0f;
+        speed = 12.0f;
         SpinSpeed = -10.0f;
         PlayerHp = Instantiate(HpBar, new Vector3(540, 350, 0), Quaternion.identity, UICanvas.transform);
         PlayerHp.transform.SetParent(UICanvas.transform, false);
@@ -71,8 +71,8 @@ public class PlayerScript : MonoBehaviour
     private IEnumerator CoSpeedTimer()
     {
         Debug.Log("speedco");
-        speed = 14.0f;
+        speed = 18.0f;
         yield return new WaitForSeconds(5.0f);
-        speed = 9.0f;
+        speed = 12.0f;
     }
 }

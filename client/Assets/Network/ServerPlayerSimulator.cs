@@ -26,6 +26,8 @@ public class ServerPlayerSimulator : MonoBehaviour
             playerInput = somePlayerInput;
             break;
         }
+        //Debug.Log(playerInput.DPad);
+        body.AddForce(playerInput.DPad * 1000 * speed, ForceMode2D.Force);
 
         if (playerInput.LeftArrow)
         {
