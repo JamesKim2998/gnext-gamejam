@@ -5,6 +5,11 @@ using WebSocketSharp;
 public static class WSClientState
 {
     public static GameState GameState = new GameState();
+
+    public static void Reset()
+    {
+        GameState = new GameState();
+    }
 }
 
 public static class WSClient
@@ -21,18 +26,20 @@ public static class WSClient
     {
         get
         {
-            if (Init.DebugStandalone) return _debugStandaloneIsConnected;
+            if (_debugStandaloneIsConnected) return true;
             return _join != null || _updatePlayerInput != null || _getGameState != null;
         }
     }
 
+    public static void ConnectFake()
+    {
+        Disconnect();
+        _debugStandaloneIsConnected = true;
+    }
+
     public static void Connect()
     {
-        if (Init.DebugStandalone)
-        {
-            _debugStandaloneIsConnected = true;
-            return;
-        }
+        _debugStandaloneIsConnected = false;
 
         if (_join != null)
             _join.Close();
@@ -71,10 +78,7 @@ public static class WSClient
     public static void Disconnect()
     {
         if (_debugStandaloneIsConnected)
-        {
             _debugStandaloneIsConnected = false;
-            return;
-        }
 
         if (_join != null)
         {

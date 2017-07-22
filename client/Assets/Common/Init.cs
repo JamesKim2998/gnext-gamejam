@@ -19,18 +19,22 @@ public class Init : MonoBehaviour
 
     void InitNetwork()
     {
-        if (WSServer.IsRunning && IsClient)
-            WSServer.Stop();
-        if (WSClient.IsConnected && !IsClient)
-            WSClient.Disconnect();
+        WSServer.Stop();
+        WSClient.Disconnect();
+        WSServerState.Reset();
+        WSClientState.Reset();
 
-        if (IsClient && !WSClient.IsConnected)
+        if (DebugStandalone)
+        {
+            WSServer.StartFake();
+            WSClient.ConnectFake();
+        }
+        else if (IsClient)
         {
             WSClient.Connect();
             WSClient.Join();
         }
-
-        if (!IsClient && !WSServer.IsRunning)
+        else
         {
             WSServer.Start();
         }

@@ -43,21 +43,21 @@ public static class WSServer
     {
         get
         {
-            if (Init.DebugStandalone) return _debugStandaloneIsRunning;
+            if (_debugStandaloneIsRunning) return true;
             return _sv != null;
         }
     }
 
     private static WebSocketServer _sv;
 
+    public static void StartFake()
+    {
+        Stop();
+        _debugStandaloneIsRunning = true;
+    }
+
     public static void Start()
     {
-        if (Init.DebugStandalone)
-        {
-            _debugStandaloneIsRunning = true;
-            return;
-        }
-
         if (_sv != null) Stop();
         _sv = new WebSocketServer("ws://0.0.0.0:8080/");
         _sv.AddWebSocketService<Join>("/Join");
@@ -70,14 +70,13 @@ public static class WSServer
     public static void Stop()
     {
         if (_debugStandaloneIsRunning)
-        {
             _debugStandaloneIsRunning = false;
-            return;
-        }
 
-        if (_sv == null) return;
-        _sv.Stop();
-        _sv = null;
+        if (_sv != null)
+        {
+            _sv.Stop();
+            _sv = null;
+        }
     }
 
     private static void Broadcast(string protocol, string json)
