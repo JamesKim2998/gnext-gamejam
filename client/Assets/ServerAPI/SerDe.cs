@@ -5,9 +5,12 @@ using UnityEngine;
 [Serializable]
 public struct PlayerInput
 {
-    // Don't set this
     public int DeviceId;
     public Vector2 DPad;
+    public bool UpArrow;
+    public bool DownArrow;
+    public bool RightArrow;
+    public bool LeftArrow;
 }
 
 [Serializable]
@@ -21,5 +24,5 @@ public struct PlayerState
 public struct GameState
 {
     public Vector2 BallPosition;
-    public Dictionary<int, PlayerState> PlayersState;
+    public List<PlayerState> PlayersState;
 }

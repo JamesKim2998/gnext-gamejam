@@ -4,20 +4,15 @@ using UnityEngine;
 using WebSocketSharp;
 using WebSocketSharp.Server;
 
-public static class WSServerState
-{
-    public static readonly List<int> JoinedPlayers = new List<int>();
-    public static readonly Dictionary<int, PlayerInput> PlayerInputs = new Dictionary<int, PlayerInput>();
-    public static readonly GameState GameState = new GameState();
-}
-
 public static class WSServer
 {
     private class Join : WebSocketBehavior
     {
         protected override void OnMessage(MessageEventArgs e)
         {
-            WSServerState.JoinedPlayers.Add(int.Parse(e.Data));
+            var deviceId = int.Parse(e.Data);
+            Debug.Log("Join: " + deviceId);
+            WSServerState.AddJoinPlayer(deviceId);
         }
     }
 
@@ -25,6 +20,7 @@ public static class WSServer
     {
         protected override void OnMessage(MessageEventArgs e)
         {
+            Debug.Log("PlayerInput: " + e.Data);
             var playerInput = JsonUtility.FromJson<PlayerInput>(e.Data);
             WSServerState.PlayerInputs[playerInput.DeviceId] = playerInput;
         }
@@ -40,6 +36,7 @@ public static class WSServer
 
         protected override void OnMessage(MessageEventArgs e)
         {
+            Debug.Log("GetGameState");
             if (!e.IsPing) return;
             Send(JsonUtility.ToJson(WSServerState.GameState));
         }

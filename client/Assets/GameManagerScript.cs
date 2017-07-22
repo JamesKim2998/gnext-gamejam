@@ -6,6 +6,7 @@ public class GameManagerScript : MonoBehaviour {
 
     [Header("Player")]
     public GameObject Player;
+    public Dictionary<int, GameObject> Players = new Dictionary<int, GameObject>();
 
 
     [Header("Player")]
@@ -39,7 +40,7 @@ public class GameManagerScript : MonoBehaviour {
             GameTime = 90.0f;
         }
 
-        Debug.Log(GameTime);
+        // Debug.Log(GameTime);
         random = Random.Range(0, 10);
         /*Debug.Log(random);
         if(random > 990)

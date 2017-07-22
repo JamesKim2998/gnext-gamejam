@@ -17,13 +17,17 @@ public class EnemyScript : MonoBehaviour {
         body = GetComponent<Rigidbody2D>();
         power = 4.0f;
 
-        EnemyHp = Instantiate(HpBar, new Vector3(540, 350, 0), Quaternion.identity, UICanvas.transform);
-        EnemyHp.transform.SetParent(UICanvas.transform, false);
+        if (UICanvas)
+        {
+            EnemyHp = Instantiate(HpBar, new Vector3(540, 350, 0), Quaternion.identity, UICanvas.transform);
+            EnemyHp.transform.SetParent(UICanvas.transform, false);
+        }
     }
     
 	// Update is called once per frame
 	void Update () {
-        EnemyHp.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + 80.0f, 0);
+        if (EnemyHp != null)
+            EnemyHp.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + 80.0f, 0);
         this.transform.Rotate(new Vector3(0, 0, 10.0f));
     }
 
