@@ -23,7 +23,7 @@ public class GameManagerScript : MonoBehaviour {
     int random;
     float timer;
     float GameTime;
-
+    public static bool firstturn;
 
 
     // Use this for initialization
