@@ -40,5 +40,6 @@ public class ClientGameStateLoader : MonoBehaviour
     {
         var pos = playerState.Position;
         player.transform.position = new Vector3(pos.x, pos.y, -1);
+        player.GetComponent<PlayerScript>().PlayerHPValue = playerState.Hp;
     }
 }

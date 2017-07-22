@@ -4,10 +4,12 @@ using UnityEngine;
 using TouchControlsKit;
 using UnityEngine.UI;
 
-public class PlayerScript : MonoBehaviour {
+public class PlayerScript : MonoBehaviour
+{
     public float power;
     public GameObject HpBar;
     Canvas UICanvas;
+    public float PlayerHPValue;
     GameObject PlayerHp;
     Rigidbody2D body;
     public static float speed;
@@ -16,8 +18,9 @@ public class PlayerScript : MonoBehaviour {
     float PowerTime;
     float SpeedTime;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start()
+    {
         body = GetComponent<Rigidbody2D>();
         UICanvas = GameObject.Find("Canvas").GetComponent<Canvas>();
         power = 4.0f;
@@ -26,10 +29,12 @@ public class PlayerScript : MonoBehaviour {
         PlayerHp = Instantiate(HpBar, new Vector3(540, 350, 0), Quaternion.identity, UICanvas.transform);
         PlayerHp.transform.SetParent(UICanvas.transform, false);
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update()
+    {
         this.transform.Rotate(new Vector3(0, 0, SpinSpeed));
+        PlayerHp.GetComponent<Slider>().value = PlayerHPValue;
     }
 
     IEnumerator PowerTimer()

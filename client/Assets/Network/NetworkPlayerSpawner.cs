@@ -53,6 +53,7 @@ public class NetworkPlayerSpawner : MonoBehaviour
         serverPlayer.DeviceId = deviceId;
         var playerQueue = go.AddComponent<PlayerQueue>();
         playerQueue.Value = queue;
+        go.GetComponent<PlayerScript>().PlayerHPValue = 100;
         _gameManager.Players[deviceId] = serverPlayer.gameObject;
         return go;
     }
@@ -70,6 +71,7 @@ public class NetworkPlayerSpawner : MonoBehaviour
             return _gameManager.Players[ownerDeviceId];
         var go = InstantitatePlayer(playerState.Queue);
         go.transform.position = playerState.Position;
+        go.GetComponent<PlayerScript>().PlayerHPValue = playerState.Hp;
         var queue = go.AddComponent<PlayerQueue>();
         queue.Value = playerState.Queue;
         if (ownerDeviceId == WSConfig.DeviceId)
@@ -88,6 +90,7 @@ public class NetworkPlayerSpawner : MonoBehaviour
             DeviceId = WSConfig.DeviceId,
             Position = Vector2.one,
             Queue = 0,
+            Hp = 100,
         });
 
         Vector3 pos = _instantiatePositions[0];

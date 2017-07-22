@@ -57,14 +57,8 @@ public class ServerPlayerSimulator : MonoBehaviour
             target.GetComponent<Rigidbody2D>().AddForce(-inNormal * Player.power, ForceMode2D.Impulse);
         }
 
-        // TODO
-        /*
         if (coll.transform.tag == "Player")
-        {
-            Debug.Log("ou");
-            PlayerHp.GetComponent<Slider>().value -= 20;
-        }
-        */
+            Player.PlayerHPValue -= 20;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
