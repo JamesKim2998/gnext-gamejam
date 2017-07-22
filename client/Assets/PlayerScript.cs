@@ -2,39 +2,47 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TouchControlsKit;
+using UnityEngine.UI;
 
 public class PlayerScript : MonoBehaviour {
     public float power;
+    public GameObject HpBar;
+    public Canvas UICanvas;
+    GameObject PlayerHp;
     Rigidbody2D body;
     public float speed;
+    public float SpinSpeed;
     public TCKDPad Pad;
 
 	// Use this for initialization
 	void Start () {
         body = GetComponent<Rigidbody2D>();
-        power = 1.1f;
-        speed = 50.0f;
-	}
+        power = 4.0f;
+        speed = 6.0f;
+        SpinSpeed = -10.0f;
+        PlayerHp = Instantiate(HpBar, new Vector3(540, 350, 0), Quaternion.identity, UICanvas.transform);
+        PlayerHp.transform.SetParent(UICanvas.transform, false);
+    }
 	
 	// Update is called once per frame
 	void Update () {
-
-        this.transform.Rotate(new Vector3(0, 0, 20.0f));
+        PlayerHp.transform.position = new Vector3(this.transform.position.x, this.transform.position.y - 80.0f, 0);
+        this.transform.Rotate(new Vector3(0, 0, SpinSpeed));
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            body.AddForce(new Vector3(-speed, 0, 0), ForceMode2D.Force);
+            body.AddForce(new Vector3(-speed*1000, 0, 0), ForceMode2D.Force);
         }
         if (Input.GetKey(KeyCode.RightArrow))
         {
-            body.AddForce(new Vector3(speed, 0, 0), ForceMode2D.Force);
+            body.AddForce(new Vector3(speed * 1000, 0, 0), ForceMode2D.Force);
         }
         if (Input.GetKey(KeyCode.UpArrow))
         {
-            body.AddForce(new Vector3(0, speed, 0), ForceMode2D.Force);
+            body.AddForce(new Vector3(0, speed * 1000, 0), ForceMode2D.Force);
         }
         if (Input.GetKey(KeyCode.DownArrow))
         {
-            body.AddForce(new Vector3(0, -speed, 0), ForceMode2D.Force);
+            body.AddForce(new Vector3(0, -speed * 1000, 0), ForceMode2D.Force);
         }
     }
 
@@ -50,10 +58,20 @@ public class PlayerScript : MonoBehaviour {
             Vector3 bounceVector =
                 Vector3.Reflect(coll.relativeVelocity, inNormal);
             Debug.Log("inNormaly : " + inNormal.y + " bounceVectory : " + bounceVector.y);
-            // 알아보기 쉽게 하기 위해 force값을 곱해 충돌시 속도를 20%로 줄였습니다. 
-            // 충돌했던 제 속도를 그대로 내시려면 수식에서 force 곱해주는 부분을 빼면 됩니다. 
+            
             target.GetComponent<Rigidbody2D>().AddForce(-inNormal * power, ForceMode2D.Impulse);
         }
+
+        if(coll.transform.tag == "enemy")
+        {
+            Debug.Log("ou");
+            PlayerHp.GetComponent<Slider>().value -= 20;
+        }
     }
+
+    /*private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.transform.tag == "")
+    }*/
 
 }

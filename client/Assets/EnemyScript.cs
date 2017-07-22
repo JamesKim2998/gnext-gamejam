@@ -1,23 +1,31 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemyScript : MonoBehaviour {
 
     public float power;
     Rigidbody2D body;
+    public GameObject HpBar;
+    public Canvas UICanvas;
+    GameObject EnemyHp;
 
     // Use this for initialization
     void Start()
     {
         body = GetComponent<Rigidbody2D>();
-        power = 1.1f;
+        power = 4.0f;
+
+        EnemyHp = Instantiate(HpBar, new Vector3(540, 350, 0), Quaternion.identity, UICanvas.transform);
+        EnemyHp.transform.SetParent(UICanvas.transform, false);
     }
     
 	// Update is called once per frame
 	void Update () {
-		
-	}
+        EnemyHp.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + 80.0f, 0);
+        this.transform.Rotate(new Vector3(0, 0, 10.0f));
+    }
 
     void OnCollisionEnter2D(Collision2D coll)
     {
@@ -31,10 +39,12 @@ public class EnemyScript : MonoBehaviour {
             //Vector3 bounceVector =  Vector3.Reflect(coll.relativeVelocity, inNormal);
             // 바운스 벡터 뭐가 문제일까
             // Debug.Log("inNormaly : " + inNormal.y + " bounceVectory : " + bounceVector.y);
-
-            // 알아보기 쉽게 하기 위해 force값을 곱해 충돌시 속도를 20%로 줄였습니다. 
-            // 충돌했던 제 속도를 그대로 내시려면 수식에서 force 곱해주는 부분을 빼면 됩니다. 
             target.GetComponent<Rigidbody2D>().AddForce(-inNormal * power, ForceMode2D.Impulse);
+        }
+
+        if (coll.transform.tag == "Player")
+        {
+            EnemyHp.GetComponent<Slider>().value -= 20;
         }
     }
 }
