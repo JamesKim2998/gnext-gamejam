@@ -6,6 +6,7 @@ public class ClientNetManager : MonoBehaviour
 
     private void Awake()
     {
+        _gameManager = GetComponent<GameManagerScript>();
         WSClientBroadcast.SmallNet += OnSmallNet;
         WSClientBroadcast.BigNet += OnBigNet;
     }
