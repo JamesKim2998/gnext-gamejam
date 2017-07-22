@@ -17,6 +17,7 @@ public struct PlayerInput
 public struct PlayerState
 {
     public int DeviceId;
+    public int Queue;
     public Vector2 Position;
 }
 

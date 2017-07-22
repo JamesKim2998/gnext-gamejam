@@ -30,9 +30,13 @@ public class ClientGameStateLoader : MonoBehaviour
             {
                 if (!clientPlayers.ContainsKey(serverPlayer.DeviceId))
                     continue;
-                var clientPlayer = clientPlayers[serverPlayer.DeviceId];
-                clientPlayer.transform.position = serverPlayer.Position;
+                LoadPlayer(clientPlayers[serverPlayer.DeviceId], serverPlayer);
             }
         }
+    }
+
+    public static void LoadPlayer(GameObject player, PlayerState playerState)
+    {
+        player.transform.position = playerState.Position;
     }
 }

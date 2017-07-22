@@ -28,6 +28,7 @@ public class ServerGameStateUpdator : MonoBehaviour
             gameState.PlayersState.Add(new PlayerState
             {
                 DeviceId = kv.Key,
+                Queue = kv.Value.GetComponent<PlayerQueue>().Value,
                 Position = kv.Value.transform.position,
             });
         }
