@@ -57,6 +57,7 @@ public class NetworkPlayerSpawner : MonoBehaviour
         serverPlayer.OnEatBigNetItem += playerDeviceId => netManager.BigNet(team);
         var playerQueue = go.AddComponent<PlayerQueue>();
         playerQueue.Value = queue;
+        _gameManager.Players[deviceId] = serverPlayer.gameObject;
         return go;
     }
 
