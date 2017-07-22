@@ -14,24 +14,21 @@ public class TestServerAPI : EditorWindow
 
     private void OnGUI()
     {
-        if (GUILayout.Button("Ping"))
-            CheckRequest(ServerAPI.Ping());
-        if (GUILayout.Button("GetPlayersInput"))
-            CheckRequest(ServerAPI.GetPlayersInput());
-        if (GUILayout.Button("UpdatePlayerInput"))
-            CheckRequest(ServerAPI.UpdatePlayerInput("{\"dpad\":[0,0]}"));
-        if (GUILayout.Button("GetGameState"))
-            CheckRequest(ServerAPI.GetGameState());
-        if (GUILayout.Button("UpdateGameState"))
-            CheckRequest(ServerAPI.UpdateGameState("{\"ball\":[0,0]}"));
+        if (GUILayout.Button("Server Start"))
+            WSServer.Start();
+        if (GUILayout.Button("Server Stop"))
+            WSServer.Stop();
         GUILayout.Space(32);
 
-        if (GUILayout.Button("WS Server Start"))
-            WSServer.Start();
-        if (GUILayout.Button("WS Server Stop"))
-            WSServer.Stop();
-        if (GUILayout.Button("WS Connect"))
+        if (GUILayout.Button("Client Connect"))
             WSClient.Connect();
+        if (GUILayout.Button("Client Join"))
+            WSClient.Join();
+        if (GUILayout.Button("Client UpdatePlayersInput"))
+            WSClient.UpdatePlayerInput(
+                new PlayerInput { DPad = Vector2.one });
+        if (GUILayout.Button("Client GetGameState"))
+            WSClient.GetGameState();
     }
 
     private void CheckRequest(UnityWebRequest r)
