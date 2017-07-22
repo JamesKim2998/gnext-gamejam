@@ -9,7 +9,7 @@ public class Init : MonoBehaviour
 #else
     public static bool DebugStandalone = false;
 #endif
-    public static bool IsClient;
+    public static bool IsClient = true;
 
     void Awake()
     {
@@ -33,5 +33,13 @@ public class Init : MonoBehaviour
         {
             WSServer.Start();
         }
+    }
+
+    void OnApplicationQuit()
+    {
+        if (WSServer.IsRunning)
+            WSServer.Stop();
+        if (WSClient.IsConnected)
+            WSClient.Disconnect();
     }
 }

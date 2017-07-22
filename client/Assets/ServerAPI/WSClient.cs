@@ -11,6 +11,7 @@ public static class WSClient
     private static WebSocket _join;
     private static WebSocket _updatePlayerInput;
     private static WebSocket _getGameState;
+    private static WebSocket _broadcast;
 
     private static bool _debugStandaloneIsConnected = false;
 
@@ -37,6 +38,8 @@ public static class WSClient
             _updatePlayerInput.Close();
         if (_getGameState != null)
             _getGameState.Close();
+        if (_broadcast != null)
+            _broadcast.Close();
 
         var serverAddr = WSConfig.ServerAddr;
         _join = new WebSocket(serverAddr + "Join");
@@ -52,6 +55,17 @@ public static class WSClient
             WSClientState.GameState = JsonUtility.FromJson<GameState>(e.Data);
         };
         _getGameState.Connect();
+
+        _broadcast = new WebSocket(serverAddr + "Broadcast");
+        _broadcast.OnMessage += (sender, e) =>
+        {
+            Debug.Log("Broadcast: " + e.Data);
+            var protocolEnd = e.Data.IndexOf('{');
+            var protocol = e.Data.Substring(0, protocolEnd);
+            var json = e.Data.Substring(protocolEnd);
+            HandleBroadcast(protocol, json);
+        };
+        _broadcast.Connect();
     }
 
     public static void Disconnect()
@@ -78,6 +92,12 @@ public static class WSClient
         {
             _getGameState.Close();
             _getGameState = null;
+        }
+
+        if (_broadcast != null)
+        {
+            _broadcast.Close();
+            _broadcast = null;
         }
     }
 
@@ -131,5 +151,25 @@ public static class WSClient
         }
 
         _getGameState.Send("GetGameState");
+    }
+
+    public static void HandleBroadcast(string protocol, string json)
+    {
+        if (protocol == "SpawnItem")
+        {
+            var serDe = JsonUtility.FromJson<SerDeSpawnItem>(json);
+            if (WSClientBroadcast.SpawnItem != null)
+                WSClientBroadcast.SpawnItem(serDe);
+        }
+        else if (protocol == "DestroyItem")
+        {
+            var serDe = JsonUtility.FromJson<SerDeDestroyItem>(json);
+            if (WSClientBroadcast.DestroyItem != null)
+                WSClientBroadcast.DestroyItem(serDe);
+        }
+        else
+        {
+            Debug.LogError("Unhandled protocol: " + protocol);
+        }
     }
 }

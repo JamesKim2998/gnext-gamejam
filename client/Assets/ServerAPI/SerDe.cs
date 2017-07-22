@@ -36,3 +36,17 @@ public class GameState
         return ret;
     }
 }
+
+[Serializable]
+public class SerDeSpawnItem
+{
+    public int ItemType;
+    public Vector2 Position;
+    public int NetworkId;
+}
+
+[Serializable]
+public class SerDeDestroyItem
+{
+    public int NetworkId;
+}

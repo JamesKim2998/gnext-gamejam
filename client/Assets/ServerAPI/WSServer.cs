@@ -36,6 +36,8 @@ public static class WSServer
         }
     }
 
+    private class _Broadcast : WebSocketBehavior { }
+
     private static bool _debugStandaloneIsRunning;
     public static bool IsRunning
     {
@@ -61,6 +63,7 @@ public static class WSServer
         _sv.AddWebSocketService<Join>("/Join");
         _sv.AddWebSocketService<UpdatePlayerInput>("/UpdatePlayerInput");
         _sv.AddWebSocketService<GetGameState>("/GetGameState");
+        _sv.AddWebSocketService<_Broadcast>("/Broadcast");
         _sv.Start();
     }
 
@@ -75,5 +78,25 @@ public static class WSServer
         if (_sv == null) return;
         _sv.Stop();
         _sv = null;
+    }
+
+    private static void Broadcast(string protocol, string json)
+    {
+        if (_debugStandaloneIsRunning) return;
+        if (_sv == null) return;
+        WebSocketServiceHost host;
+        if (_sv.WebSocketServices.TryGetServiceHost("/Broadcast", out host))
+            host.Sessions.Broadcast(protocol + json);
+    }
+
+    public static void SpawnItem(SerDeSpawnItem serDe)
+    {
+        Broadcast("SpawnItem", JsonUtility.ToJson(serDe));
+    }
+
+    public static void DestroyItem(int networkId)
+    {
+        var serDe = new SerDeDestroyItem { NetworkId = networkId };
+        Broadcast("DestroyItem", JsonUtility.ToJson(serDe));
     }
 }

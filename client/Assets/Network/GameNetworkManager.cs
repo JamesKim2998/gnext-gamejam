@@ -3,15 +3,16 @@ using UnityEngine;
 
 public class GameNetworkManager : MonoBehaviour
 {
-    private GameManagerScript _gameManager;
-
     private void Awake()
     {
-        _gameManager = GetComponent<GameManagerScript>();
         gameObject.AddComponent<NetworkPlayerSpawner>();
         if (WSServer.IsRunning)
             gameObject.AddComponent<ServerGameStateUpdator>();
+        if (WSServer.IsRunning || Init.DebugStandalone)
+            gameObject.AddComponent<ServerItemSpawner>();
         if (!WSServer.IsRunning)
             gameObject.AddComponent<ClientGameStateLoader>();
+        if (!WSServer.IsRunning && !Init.DebugStandalone)
+            gameObject.AddComponent<ClientItemSpawner>();
     }
 }
