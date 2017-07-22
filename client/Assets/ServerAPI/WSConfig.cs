@@ -2,11 +2,14 @@ using UnityEngine;
 
 public static class WSConfig
 {
+    private static int _deviceId = -1;
     public static int DeviceId
     {
         get
         {
-            return SystemInfo.deviceUniqueIdentifier.GetHashCode();
+            if (_deviceId == -1)
+                _deviceId = SystemInfo.deviceUniqueIdentifier.GetHashCode();
+            return _deviceId;
         }
     }
 
