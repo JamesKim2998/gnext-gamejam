@@ -19,9 +19,9 @@ public class NetworkPlayerSpawner : MonoBehaviour
 
     private void Update()
     {
-        if (WSServer.IsRunning || Init.DebugStandalone)
+        if (WSServer.IsRunning && !Init.DebugStandalone)
             UpdateOnServer();
-        if (!WSServer.IsRunning || Init.DebugStandalone)
+        if (!WSServer.IsRunning && !Init.DebugStandalone)
             UpdateOnClient();
         if (Init.DebugStandalone)
             SetMyPlayerForDebug();
@@ -81,18 +81,19 @@ public class NetworkPlayerSpawner : MonoBehaviour
     private void SetMyPlayerForDebug()
     {
         var myPlayerExists = _gameManager.Players.ContainsKey(WSConfig.DeviceId);
-        if (!myPlayerExists)
-        {
-            SpawnClientPlayer(new PlayerState()
-            {
-                DeviceId = WSConfig.DeviceId,
-                Position = Vector2.one,
-                Queue = 0,
-            });
-        }
+        if (myPlayerExists) return;
 
-        var myPlayer = _gameManager.Players[WSConfig.DeviceId];
-        myPlayer.transform.position = _instantiatePositions[0];
+        var myPlayer = SpawnClientPlayer(new PlayerState()
+        {
+            DeviceId = WSConfig.DeviceId,
+            Position = Vector2.one,
+            Queue = 0,
+        });
+
+        Vector3 pos = _instantiatePositions[0];
+        pos.z = -1;
+        myPlayer.transform.position = pos;
+
         if (!myPlayer.GetComponent<ClientPlayerInputHandler>())
             myPlayer.AddComponent<ClientPlayerInputHandler>();
 
