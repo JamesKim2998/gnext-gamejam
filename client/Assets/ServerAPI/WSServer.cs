@@ -99,4 +99,10 @@ public static class WSServer
         var serDe = new SerDeDestroyItem { NetworkId = networkId };
         Broadcast("DestroyItem", JsonUtility.ToJson(serDe));
     }
+
+    public static void ChangeScore(SerDeScore serDe)
+    {
+        Debug.Log("Score: " + serDe.ScoreP1 + " : " + serDe.ScoreP2);
+        Broadcast("ChangeScore", JsonUtility.ToJson(serDe));
+    }
 }

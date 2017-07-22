@@ -14,6 +14,22 @@ public class GameNetworkManager : MonoBehaviour
             gameObject.AddComponent<ClientGameStateLoader>();
         if (!WSServer.IsRunning && !Init.DebugStandalone)
             gameObject.AddComponent<ClientItemSpawner>();
+
+        if (WSServer.IsRunning || Init.DebugStandalone)
+        {
+            var gameManager = GetComponent<GameManagerScript>();
+            var scoreManager = gameObject.AddComponent<ServerScoreManager>();
+            gameManager.Score = scoreManager;
+            var ballSimulator = gameManager.Ball.AddComponent<ServerBallSimultor>();
+            ballSimulator.OnP1Score += scoreManager.P1ScorePlus;
+            ballSimulator.OnP2Score += scoreManager.P2ScorePlus;
+        }
+        else
+        {
+            var gameManager = GetComponent<GameManagerScript>();
+            var scoreManager = gameObject.AddComponent<ClientScoreManager>();
+            gameManager.Score = scoreManager;
+        }
     }
 
     private void Update()

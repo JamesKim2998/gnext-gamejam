@@ -54,3 +54,10 @@ public class SerDeDestroyItem
 {
     public int NetworkId;
 }
+
+[Serializable]
+public struct SerDeScore
+{
+    public int ScoreP1;
+    public int ScoreP2;
+}

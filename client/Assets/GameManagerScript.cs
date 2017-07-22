@@ -21,6 +21,8 @@ public class GameManagerScript : MonoBehaviour {
     public GameObject Item10;
 
     float GameTime;
+    public IScoreProvider Score = new ZeroScoreProvider();
+    public ScoreView ScoreView;
     public static bool firstturn;
     public static int GameState;
 
@@ -36,8 +38,9 @@ public class GameManagerScript : MonoBehaviour {
     {
         GameState = 1;
     }
-	// Update is called once per frame
-	void Update () {
+
+    void Update () {
+        ScoreView.Set(Score.P1Score, Score.P2Score);
         if (GameState == 1)
         {
             GameTime -= Time.deltaTime;
@@ -46,9 +49,9 @@ public class GameManagerScript : MonoBehaviour {
             {
                 if (firstturn)
                 {
-                    if (ScoreManager.P1Score > ScoreManager.P2Score)
+                    if (Score.P1Score > Score.P2Score)
                         GameState = 2;
-                    else if (ScoreManager.P1Score == ScoreManager.P2Score)
+                    else if (Score.P1Score == Score.P2Score)
                         GameState = 3;
                     else
                         GameState = 4;
@@ -56,9 +59,9 @@ public class GameManagerScript : MonoBehaviour {
                 else
                 {
 
-                    if (ScoreManager.P1Score < ScoreManager.P2Score)
+                    if (Score.P1Score < Score.P2Score)
                         GameState = 2;
-                    else if (ScoreManager.P1Score == ScoreManager.P2Score)
+                    else if (Score.P1Score == Score.P2Score)
                         GameState = 3;
                     else
                         GameState = 4;

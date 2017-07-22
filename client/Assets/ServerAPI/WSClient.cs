@@ -183,6 +183,12 @@ public static class WSClient
             if (WSClientBroadcast.DestroyItem != null)
                 WSClientBroadcast.DestroyItem(serDe);
         }
+        else if (protocol == "ChangeScore")
+        {
+            var serDe = JsonUtility.FromJson<SerDeScore>(json);
+            if (WSClientBroadcast.ChangeScore != null)
+                WSClientBroadcast.ChangeScore(serDe);
+        }
         else
         {
             Debug.LogError("Unhandled protocol: " + protocol);
