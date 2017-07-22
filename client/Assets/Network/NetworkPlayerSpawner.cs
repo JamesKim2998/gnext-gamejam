@@ -3,6 +3,14 @@ using UnityEngine;
 public class NetworkPlayerSpawner : MonoBehaviour
 {
     private GameManagerScript _gameManager;
+    private readonly Vector2[] _instantiatePositions = new Vector2[] {
+        new Vector2(540, 400),
+        new Vector2(540, 1520),
+        new Vector2(320, 400),
+        new Vector2(320, 1520),
+        new Vector2(760, 400),
+        new Vector2(760, 1520),
+    };
 
     private void Awake()
     {
@@ -28,11 +36,17 @@ public class NetworkPlayerSpawner : MonoBehaviour
         }
     }
 
+    private GameObject InstantitatePlayer(int queue)
+    {
+        return GameObject.Instantiate(Resources.Load<GameObject>("player" + (queue + 1)));
+    }
+
     private GameObject SpawnServerPlayer(int deviceId, int queue)
     {
         if (_gameManager.Players.ContainsKey(deviceId))
             return _gameManager.Players[deviceId];
-        var go = GameObject.Instantiate(Resources.Load<GameObject>("enemy"));
+        var go = InstantitatePlayer(queue);
+        go.transform.position = _instantiatePositions[queue % _instantiatePositions.Length];
         var serverPlayer = go.AddComponent<ServerPlayerSimulator>();
         serverPlayer.DeviceId = deviceId;
         var playerQueue = go.AddComponent<PlayerQueue>();
@@ -52,12 +66,12 @@ public class NetworkPlayerSpawner : MonoBehaviour
         var ownerDeviceId = playerState.DeviceId;
         if (_gameManager.Players.ContainsKey(ownerDeviceId))
             return _gameManager.Players[ownerDeviceId];
-        var go = GameObject.Instantiate(Resources.Load<GameObject>("enemy"));
+        var go = InstantitatePlayer(playerState.Queue);
         go.transform.position = playerState.Position;
         var queue = go.AddComponent<PlayerQueue>();
+        queue.Value = playerState.Queue;
         if (ownerDeviceId == WSConfig.DeviceId)
             go.AddComponent<ClientPlayerInputHandler>();
-        queue.Value = playerState.Queue;
         _gameManager.Players[ownerDeviceId] = go;
         return go;
     }
@@ -76,6 +90,7 @@ public class NetworkPlayerSpawner : MonoBehaviour
         }
 
         var myPlayer = _gameManager.Players[WSConfig.DeviceId];
+        myPlayer.transform.position = _instantiatePositions[0];
         if (!myPlayer.GetComponent<ClientPlayerInputHandler>())
             myPlayer.AddComponent<ClientPlayerInputHandler>();
 
