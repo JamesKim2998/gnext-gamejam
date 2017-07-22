@@ -65,12 +65,12 @@ public class ServerPlayerSimulator : MonoBehaviour
     {
         if (collision.transform.tag == "item3")
         {
-            collision.gameObject.SetActive(false);
+            Destroy(collision.gameObject);
             StartCoroutine("PowerTimer");
         }
         if (collision.transform.tag == "item4")
         {
-            collision.gameObject.SetActive(false);
+            Destroy(collision.gameObject);
             StartCoroutine("SpeedTimer");
         }
         if (collision.transform.tag == "item5")
@@ -82,8 +82,8 @@ public class ServerPlayerSimulator : MonoBehaviour
         {
             GameObject white = GameObject.FindWithTag("item7");
             this.transform.position = white.transform.position;
-            collision.gameObject.SetActive(false);
-            white.gameObject.SetActive(false);
+            Destroy(collision.gameObject);
+            Destroy(white.gameObject);
         }
         if (collision.transform.tag == "item8")
         {
@@ -94,14 +94,14 @@ public class ServerPlayerSimulator : MonoBehaviour
         if (collision.transform.tag == "item9")
         {
             StartCoroutine("SmallNet");
-            collision.gameObject.SetActive(false);
+            Destroy(collision.gameObject);
         }
 
         // TODO
         if (collision.transform.tag == "item10")
         {
             StartCoroutine("BigNet");
-            collision.gameObject.SetActive(false);
+            Destroy(collision.gameObject);
         }
     }
 
@@ -109,7 +109,7 @@ public class ServerPlayerSimulator : MonoBehaviour
     {
         if (collision.transform.tag == "item5")
         {
-            collision.gameObject.SetActive(false);
+            Destroy(collision.gameObject);
             body.drag = 0.6f;
         }
         if (collision.transform.tag == "item8")

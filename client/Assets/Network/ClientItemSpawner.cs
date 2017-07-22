@@ -35,7 +35,12 @@ public class ClientItemSpawner : MonoBehaviour
 
     private void OnDestroyItem(SerDeDestroyItem serDe)
     {
-        if (!_items.ContainsKey(serDe.NetworkId)) return;
+        if (!_items.ContainsKey(serDe.NetworkId))
+        {
+            Debug.LogError("Item not found: " + serDe.NetworkId);
+            return;
+        }
+
         var item = _items[serDe.NetworkId];
         if (item != null) Destroy(item);
         _items.Remove(serDe.NetworkId);
