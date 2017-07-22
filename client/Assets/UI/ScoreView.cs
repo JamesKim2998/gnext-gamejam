@@ -5,14 +5,14 @@ using UnityEngine.UI;
 
 public class ScoreView : MonoBehaviour
 {
-    public SpriteRenderer Score1;
-    public SpriteRenderer Score2;
+    public Image Score1;
+    public Image Score2;
     public Sprite[] NumSprite = new Sprite[10];
 
     void Start()
     {
-        Score1.GetComponent<SpriteRenderer>().sprite = NumSprite[0];
-        Score2.GetComponent<SpriteRenderer>().sprite = NumSprite[0];
+        Score1.sprite = NumSprite[0];
+        Score2.sprite = NumSprite[0];
     }
 
     public void Set(int p1Score, int p2Score)
