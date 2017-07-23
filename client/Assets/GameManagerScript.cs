@@ -146,7 +146,10 @@ public class GameManagerScript : MonoBehaviour
         if (ResetServer && WSServer.IsRunning)
         {
             ResetServer = false;
-            if (WSServerState.JoinedPlayers.Count < 2)
+            var count = 0;
+            lock (WSServerState.JoinedPlayers)
+                count = WSServerState.JoinedPlayers.Count;
+            if (count < 2)
                 WSServerState.Reset();
             SceneManager.LoadScene("main");
         }

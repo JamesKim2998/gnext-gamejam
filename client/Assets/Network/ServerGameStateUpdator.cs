@@ -15,7 +15,10 @@ public class ServerGameStateUpdator : MonoBehaviour
     {
         if (_gameManager == null) return;
 
-        var gameState = WSServerState.GameState;
+
+        GameState gameState = null;
+        lock (WSServerState.GameState)
+            gameState = WSServerState.GameState.Clone();
         gameState.FrameCount = Time.frameCount;
 
         if (GameManagerScript.GameState == 1)
@@ -41,5 +44,8 @@ public class ServerGameStateUpdator : MonoBehaviour
                 Velocity = kv.Value.GetComponent<Rigidbody2D>().velocity,
             });
         }
+
+        lock (WSServerState.GameState)
+            WSServerState.GameState = gameState;
     }
 }

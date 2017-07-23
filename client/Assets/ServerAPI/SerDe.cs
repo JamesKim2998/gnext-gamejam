@@ -35,6 +35,8 @@ public class GameState
     {
         var ret = new GameState
         {
+            FrameCount = FrameCount,
+            GameTime = GameTime,
             BallPosition = this.BallPosition,
             BallVelocity = this.BallVelocity,
         };
