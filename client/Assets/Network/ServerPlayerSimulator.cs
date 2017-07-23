@@ -29,21 +29,22 @@ public class ServerPlayerSimulator : MonoBehaviour
         //Debug.Log(playerInput.DPad);
         body.AddForce(playerInput.DPad * 1000 * speed, ForceMode2D.Force);
 
+        var arrowPower = speed * 2000;
         if (playerInput.LeftArrow)
         {
-            body.AddForce(new Vector3(-speed * 1000, 0, 0), ForceMode2D.Force);
+            body.AddForce(arrowPower * Vector3.left, ForceMode2D.Force);
         }
         if (playerInput.RightArrow)
         {
-            body.AddForce(new Vector3(speed * 1000, 0, 0), ForceMode2D.Force);
+            body.AddForce(arrowPower * Vector3.right, ForceMode2D.Force);
         }
         if (playerInput.UpArrow)
         {
-            body.AddForce(new Vector3(0, speed * 1000, 0), ForceMode2D.Force);
+            body.AddForce(arrowPower * Vector3.up, ForceMode2D.Force);
         }
         if (playerInput.DownArrow)
         {
-            body.AddForce(new Vector3(0, -speed * 1000, 0), ForceMode2D.Force);
+            body.AddForce(arrowPower * Vector3.down, ForceMode2D.Force);
         }
     }
 
