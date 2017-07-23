@@ -19,7 +19,7 @@ public class PlayerScript : MonoBehaviour
     void Start()
     {
         PlayerAnimator = GetComponent<Animator>();
-        eff1 = Instantiate(Effect1, this.transform.position, Quaternion.identity);
+        eff1 = Instantiate(Effect1, new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z -10.0f), Quaternion.identity);
         eff1.SetActive(false);
         PlayerAnimator.SetBool("PowerUp", false);
         PlayerAnimator.SetBool("Groggy", false);
