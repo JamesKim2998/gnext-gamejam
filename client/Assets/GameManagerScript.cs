@@ -50,13 +50,6 @@ public class GameManagerScript : MonoBehaviour
     public GameObject ManLose;
     public GameObject GirlLose;
 
-
-    // Use this for initialization
-    void Start()
-    {
-        Invoke("GameStart", 1.0f);
-    }
-
     void OnDestroy()
     {
         GameState = 0;
@@ -65,7 +58,7 @@ public class GameManagerScript : MonoBehaviour
     void GameStart()
     {
         GameState = 1;
-        ScoreView.Swap = MyTeam == 1;
+        ScoreView.Swap = (MyTeam == 1);
     }
 
     //판넬 키는 부분
@@ -74,7 +67,14 @@ public class GameManagerScript : MonoBehaviour
         ScoreView.Set(Score.P1Score, Score.P2Score);
         TimerView.Set((int)ServerGameTime);
 
-        if (GameState == 1)
+        if (GameState == 0)
+        {
+            if (Init.DebugStandalone)
+                GameStart();
+            else if (Players.Count >= 2)
+                Invoke("GameStart", 2.0f);
+        }
+        else if (GameState == 1)
         {
             if (ServerGameTime < 0.0f || Score.P1Score == 10 || Score.P2Score == 10)
             {
