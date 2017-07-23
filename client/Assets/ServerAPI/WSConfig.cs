@@ -14,7 +14,8 @@ public static class WSConfig
     }
 
     private static string _serverAddr;
-    public static string ServerAddr
+    public static string ServerAddr = "ws://172.17.192.234:8080/"
+    /*
     {
         get
         {
@@ -32,4 +33,5 @@ public static class WSConfig
             PlayerPrefs.SetString(key, value);
         }
     }
+    */
 }
