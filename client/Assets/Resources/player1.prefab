@@ -108,7 +108,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   power: 0
-  Effect1: {fileID: 1516692686007120, guid: 7bc8b8834c0924a49b1b083a41e93abc, type: 2}
+  speed: 0
+  SpinSpeed: 0
+  Effect1: {fileID: 1705712345744528, guid: 96de6cde0ae2846bf85dc6de5225f245, type: 2}
 --- !u!212 &212555355210167718
 SpriteRenderer:
   m_ObjectHideFlags: 1
