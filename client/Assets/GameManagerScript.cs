@@ -89,6 +89,7 @@ public class GameManagerScript : MonoBehaviour
             }
             else if (Players.Count >= 2)
             {
+                WSClient.Join();
                 ReadyPanel.SetActive(false);
                 Invoke("GameStart", 0.5f);
             }
