@@ -42,9 +42,7 @@ public static class WSServer
     {
         protected override void OnMessage(MessageEventArgs e)
         {
-            string gameState = "";
-            lock (WSServerState.GameState)
-                gameState = JsonUtility.ToJson(WSServerState.GameState);
+            var gameState = JsonUtility.ToJson(WSServerState.GameState);
             // Debug.Log("GetGameState: " + gameState);
             Send(gameState);
         }

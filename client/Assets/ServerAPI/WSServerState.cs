@@ -8,29 +8,21 @@ public static class WSServerState
 
     public static void Reset()
     {
-        lock (JoinedPlayers)
-            JoinedPlayers.Clear();
+        JoinedPlayers.Clear();
         PlayerInputs.Clear();
-        lock (GameState)
-            GameState = new GameState();
+        GameState = new GameState();
     }
 
     public static void AddJoinPlayer(int deviceId)
     {
-        lock (JoinedPlayers)
-        {
-            if (JoinedPlayers.Contains(deviceId)) return;
-            JoinedPlayers.Add(deviceId);
-        }
+        if (JoinedPlayers.Contains(deviceId)) return;
+        JoinedPlayers.Add(deviceId);
     }
 
     public static void RemovePlayer(int deviceId)
     {
-        lock (JoinedPlayers)
-        {
-            if (JoinedPlayers.Contains(deviceId))
-                JoinedPlayers.Remove(deviceId);
-        }
+        if (JoinedPlayers.Contains(deviceId))
+            JoinedPlayers.Remove(deviceId);
 
         for (var i = 0; i != PlayerInputs.Count; ++i)
         {
@@ -41,15 +33,12 @@ public static class WSServerState
             }
         }
 
-        lock (GameState)
+        for (var i = 0; i != GameState.PlayersState.Count; ++i)
         {
-            for (var i = 0; i != GameState.PlayersState.Count; ++i)
+            if (GameState.PlayersState[i].DeviceId == deviceId)
             {
-                if (GameState.PlayersState[i].DeviceId == deviceId)
-                {
-                    GameState.PlayersState.RemoveAt(i);
-                    break;
-                }
+                GameState.PlayersState.RemoveAt(i);
+                break;
             }
         }
     }

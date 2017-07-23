@@ -29,13 +29,10 @@ public class NetworkPlayerSpawner : MonoBehaviour
 
     private void UpdateOnServer()
     {
-        lock (WSServerState.JoinedPlayers)
+        for (var i = 0; i < WSServerState.JoinedPlayers.Count; ++i)
         {
-            for (var i = 0; i < WSServerState.JoinedPlayers.Count; ++i)
-            {
-                var deviceId = WSServerState.JoinedPlayers[i];
-                SpawnServerPlayer(deviceId, i);
-            }
+            var deviceId = WSServerState.JoinedPlayers[i];
+            SpawnServerPlayer(deviceId, i);
         }
     }
 
