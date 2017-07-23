@@ -8,6 +8,8 @@ public class PlayerScript : MonoBehaviour
     public float power;
     public static float speed;
     public static float SpinSpeed;
+    public GameObject Effect1;
+    GameObject eff1;
     Animator PlayerAnimator;
 
     float PowerTime;
@@ -17,6 +19,8 @@ public class PlayerScript : MonoBehaviour
     void Start()
     {
         PlayerAnimator = GetComponent<Animator>();
+        eff1 = Instantiate(Effect1, this.transform.position, Quaternion.identity);
+        eff1.SetActive(false);
         PlayerAnimator.SetBool("PowerUp", false);
         PlayerAnimator.SetBool("Groggy", false);
         power = 5.0f;
@@ -70,10 +74,13 @@ public class PlayerScript : MonoBehaviour
     {
         GameObject.Find("Canvas").GetComponent<TouchScreen>().enabled = false;
         PlayerAnimator.SetBool("Groggy", true);
+        eff1.transform.position = this.transform.position;
+        eff1.SetActive(true);
         SpinSpeed = 0.0f;
         yield return new WaitForSeconds(1.7f);
         GameObject.Find("Canvas").GetComponent<TouchScreen>().enabled = true;
         PlayerAnimator.SetBool("Groggy", false);
+        Effect1.SetActive(false);
         SpinSpeed = -10.0f;
     }
 }
