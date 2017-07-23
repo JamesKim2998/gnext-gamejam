@@ -113,6 +113,8 @@ public class GameManagerScript : MonoBehaviour
                     DrawButton.SetActive(true);
                 if (meWinState == -1)
                     LoseButton.SetActive(true);
+
+                finish = true;
             }
         }
     }
