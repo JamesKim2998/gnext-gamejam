@@ -73,18 +73,18 @@ public class GameManagerScript : MonoBehaviour
 
         if (finish == false)
         {
-            var maybeMyTeam = MyTeam;
-            int myTeam = 0;
-            if (maybeMyTeam.HasValue)
-                myTeam = maybeMyTeam.Value;
-            else
-            {
-                Debug.LogError("My player not found");
-                myTeam = 0;
-            }
-
             if (ServerGameTime < 0.0f || Score.P1Score == 10 || Score.P2Score == 10)
             {
+                var maybeMyTeam = MyTeam;
+                int myTeam = 0;
+                if (maybeMyTeam.HasValue)
+                    myTeam = maybeMyTeam.Value;
+                else
+                {
+                    Debug.LogError("My player not found");
+                    myTeam = 0;
+                }
+
                 finish = true;
                 var meWinState = 0;
                 ResultPanel.SetActive(true);

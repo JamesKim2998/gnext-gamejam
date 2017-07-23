@@ -63,9 +63,10 @@ public class ServerPlayerSimulator : MonoBehaviour
             target.GetComponent<Rigidbody2D>().AddForce(-inNormal * Player.power, ForceMode2D.Impulse);
         }
 
-        if(coll.transform.tag == "Player")
+        if (coll.transform.tag == "Player")
         {
             Player.GroggyTimer();
+            WSServer.PlayerGroggy(DeviceId);
         }
     }
 
@@ -75,6 +76,7 @@ public class ServerPlayerSimulator : MonoBehaviour
         {
             Destroy(collision.gameObject);
             Player.PowerTimer();
+            WSServer.PlayerPowerUp(DeviceId);
         }
         if (collision.transform.tag == "item4")
         {
@@ -83,7 +85,6 @@ public class ServerPlayerSimulator : MonoBehaviour
         }
         if (collision.transform.tag == "item5")
         {
-
             body.drag = 6.5f;
         }
         if (collision.transform.tag == "item6")
