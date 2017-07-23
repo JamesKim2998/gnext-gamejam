@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class TitleButton : MonoBehaviour {
     public GameObject TitleImage;
     public GameObject Title;
-    public GameObject GameManager;
 
 	// Use this for initialization
 	void Start () {
@@ -35,11 +35,8 @@ public class TitleButton : MonoBehaviour {
         }
     }
 
-    public void StartGame()
+    public void TitletoLobby()
     {
-        TitleImage.SetActive(false);
-        Title.SetActive(false);
-        this.gameObject.SetActive(false);
-        GameManager.SetActive(true);
+        SceneManager.LoadScene("main");
     }
 }
