@@ -10,12 +10,16 @@ public class ServerScoreManager : MonoBehaviour, IScoreProvider
 
     public void P1ScorePlus()
     {
+        if (GameManagerScript.GameState != 1)
+            return;
         ++_scoreP1;
         Broadcast();
     }
 
     public void P2ScorePlus()
     {
+        if (GameManagerScript.GameState != 1)
+            return;
         ++_scoreP2;
         Broadcast();
     }

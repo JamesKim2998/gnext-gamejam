@@ -49,14 +49,17 @@ public class GameManagerScript : MonoBehaviour
     public GameObject GirlWin;
     public GameObject ManLose;
     public GameObject GirlLose;
-    bool finish;
 
 
     // Use this for initialization
     void Start()
     {
         Invoke("GameStart", 1.0f);
-        finish = false;
+    }
+
+    void OnDestroy()
+    {
+        GameState = 0;
     }
 
     void GameStart()
@@ -71,7 +74,7 @@ public class GameManagerScript : MonoBehaviour
         ScoreView.Set(Score.P1Score, Score.P2Score);
         TimerView.Set((int)ServerGameTime);
 
-        if (finish == false)
+        if (GameState == 1)
         {
             if (ServerGameTime < 0.0f || Score.P1Score == 10 || Score.P2Score == 10)
             {
@@ -85,7 +88,7 @@ public class GameManagerScript : MonoBehaviour
                     myTeam = 0;
                 }
 
-                finish = true;
+                GameState = 2;
                 var meWinState = 0;
                 ResultPanel.SetActive(true);
                 if (Score.P1Score > Score.P2Score)
@@ -113,8 +116,6 @@ public class GameManagerScript : MonoBehaviour
                     DrawButton.SetActive(true);
                 if (meWinState == -1)
                     LoseButton.SetActive(true);
-
-                finish = true;
             }
         }
     }

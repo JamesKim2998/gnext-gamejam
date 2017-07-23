@@ -13,6 +13,9 @@ public class ClientPlayerInputHandler : MonoBehaviour
 
     private void Update()
     {
+        if (GameManagerScript.GameState != 1)
+            return;
+
         WSClient.UpdatePlayerInput(new PlayerInput()
         {
             DeviceId = WSConfig.DeviceId,
@@ -23,7 +26,7 @@ public class ClientPlayerInputHandler : MonoBehaviour
             LeftArrow = Input.GetKey(KeyCode.LeftArrow),
         });
 
-        PlayerChecker.transform.position = new Vector3(this.transform.position.x, this.transform.position.y+100, 0);
+        PlayerChecker.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + 100, 0);
         // Debug.Log(TouchScreen.inNormal);
     }
 }

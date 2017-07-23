@@ -17,6 +17,9 @@ public class ServerItemSpawner : MonoBehaviour
 
     void Update()
     {
+        if (GameManagerScript.GameState != 1)
+            return;
+
         timer += Time.deltaTime;
         if (timer > 7.0f)
         {
