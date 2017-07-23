@@ -40,6 +40,11 @@ public class PlayerScript : MonoBehaviour
         StartCoroutine(CoPowerTimer());
     }
 
+    public bool IsPowerUp()
+    {
+        return PlayerAnimator.GetBool("PowerUp");
+    }
+
     private IEnumerator CoPowerTimer()
     {
         PlayerAnimator.SetBool("PowerUp", true);
@@ -77,7 +82,7 @@ public class PlayerScript : MonoBehaviour
         eff1.transform.position = this.transform.position;
         eff1.SetActive(true);
         SpinSpeed = 0.0f;
-        yield return new WaitForSeconds(1.7f);
+        yield return new WaitForSeconds(0.8f);
         GameObject.Find("Canvas").GetComponent<TouchScreen>().enabled = true;
         PlayerAnimator.SetBool("Groggy", false);
         Effect1.SetActive(false);

@@ -67,8 +67,11 @@ public class ServerPlayerSimulator : MonoBehaviour
 
         if (coll.transform.tag == "Player")
         {
-            Player.GroggyTimer();
-            WSServer.PlayerGroggy(DeviceId);
+            if (!Player.IsPowerUp())
+            {
+                Player.GroggyTimer();
+                WSServer.PlayerGroggy(DeviceId);
+            }
         }
     }
 
