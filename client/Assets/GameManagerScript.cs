@@ -90,7 +90,7 @@ public class GameManagerScript : MonoBehaviour
             else if (Players.Count >= 2)
             {
                 ReadyPanel.SetActive(false);
-                Invoke("GameStart", 2.0f);
+                Invoke("GameStart", 0.5f);
             }
             else
             {
