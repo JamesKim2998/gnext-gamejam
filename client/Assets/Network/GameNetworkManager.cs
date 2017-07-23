@@ -67,9 +67,10 @@ public class GameNetworkManager : MonoBehaviour
     private void OnPlayerPowerUp(int deviceId)
     {
         var gameManager = GetComponent<GameManagerScript>();
-        if (!gameManager.Players.ContainsKey(deviceId)) return;
         var player = gameManager.Players[deviceId];
         player.GetComponent<PlayerScript>().PowerTimer();
+        if (deviceId == WSConfig.DeviceId)
+            SoundManager.Play("get_boostup");
     }
 
     private void OnPlayerGroggy(int deviceId)
@@ -78,5 +79,7 @@ public class GameNetworkManager : MonoBehaviour
         if (!gameManager.Players.ContainsKey(deviceId)) return;
         var player = gameManager.Players[deviceId];
         player.GetComponent<PlayerScript>().GroggyTimer();
+        if (deviceId == WSConfig.DeviceId)
+            SoundManager.Play("collision");
     }
 }

@@ -7,19 +7,28 @@ public class ServerItemSpawner : MonoBehaviour
     private static int _itemNetworkId;
     GameManagerScript _gameManager;
     float timer;
+    float blueTimeLeft;
 
     void Awake()
     {
         _gameManager = GetComponent<GameManagerScript>();
+        blueTimeLeft = Random.Range(3f, 8f);
     }
 
     void Update()
     {
         timer += Time.deltaTime;
-        if (timer > 10.0f)
+        if (timer > 7.0f)
         {
             timer = 0.0f;
             SpawnRandomItem();
+        }
+
+        blueTimeLeft -= Time.deltaTime;
+        if (blueTimeLeft <= 0)
+        {
+            blueTimeLeft = Random.Range(5f, 12f);
+            SpawnRandomBlue();
         }
     }
 
@@ -49,11 +58,14 @@ public class ServerItemSpawner : MonoBehaviour
         return ret;
     }
 
+    private void SpawnRandomBlue()
+    {
+        InstantiateItem(2);
+    }
+
     private void SpawnRandomItem()
     {
-        var ItemNum = (Random.Range(0, 100) % 7);
-        var blueitem = InstantiateItem(2);
-        var blueitem2 = InstantiateItem(2);
+        var ItemNum = Random.Range(0, 7);
 
         switch (ItemNum)
         {

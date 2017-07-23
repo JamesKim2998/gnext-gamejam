@@ -22,6 +22,7 @@ public class ClientScoreManager : MonoBehaviour, IScoreProvider
     {
         _scoreP1 = score.ScoreP1;
         _scoreP2 = score.ScoreP2;
+        SoundManager.Play("goal");
     }
 }
 
