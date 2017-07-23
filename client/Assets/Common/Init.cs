@@ -20,32 +20,34 @@ public class Init : MonoBehaviour
 
     void InitNetwork()
     {
-        WSServer.Stop();
-        WSClient.Disconnect();
         WSServerState.Reset();
-        WSClientState.Reset();
 
         if (DebugStandalone)
         {
+            WSServer.Stop();
+            WSServerState.Reset();
+            WSClient.Disconnect();
+            WSClientState.Reset();
             WSServer.StartFake();
             WSClient.ConnectFake();
         }
         else if (IsClient)
         {
+            WSServer.Stop();
+            WSServerState.Reset();
             WSClient.Connect();
-            WSClient.Join();
         }
         else
         {
+            WSClient.Disconnect();
+            WSClientState.Reset();
             WSServer.Start();
         }
     }
 
     void OnApplicationQuit()
     {
-        if (WSServer.IsRunning)
-            WSServer.Stop();
-        if (WSClient.IsConnected)
-            WSClient.Disconnect();
+        WSServer.Stop();
+        WSClient.Disconnect();
     }
 }

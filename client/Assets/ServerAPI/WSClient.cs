@@ -15,6 +15,7 @@ public static class WSClientState
 public static class WSClient
 {
     private static WebSocket _join;
+    private static WebSocket _leave;
     private static WebSocket _updatePlayerInput;
     private static WebSocket _getGameState;
     private static WebSocket _broadcast;
@@ -27,7 +28,7 @@ public static class WSClient
         get
         {
             if (_debugStandaloneIsConnected) return true;
-            return _join != null || _updatePlayerInput != null || _getGameState != null;
+            return _join != null || _leave != null || _updatePlayerInput != null || _getGameState != null;
         }
     }
 
@@ -43,6 +44,8 @@ public static class WSClient
 
         if (_join != null)
             _join.Close();
+        if (_leave != null)
+            _leave.Close();
         if (_updatePlayerInput != null)
             _updatePlayerInput.Close();
         if (_getGameState != null)
@@ -53,6 +56,8 @@ public static class WSClient
         var serverAddr = WSConfig.ServerAddr;
         _join = new WebSocket(serverAddr + "Join");
         _join.Connect();
+        _leave = new WebSocket(serverAddr + "Leave");
+        _leave.Connect();
 
         _updatePlayerInput = new WebSocket(serverAddr + "UpdatePlayerInput");
         _updatePlayerInput.Connect();
@@ -84,6 +89,12 @@ public static class WSClient
         {
             _join.Close();
             _join = null;
+        }
+
+        if (_leave != null)
+        {
+            _leave.Close();
+            _leave = null;
         }
 
         if (_updatePlayerInput != null)
@@ -120,6 +131,25 @@ public static class WSClient
         }
 
         _join.Send(WSConfig.DeviceId.ToString());
+    }
+
+    public static void Leave()
+    {
+        WSClientState.Reset();
+
+        if (Init.DebugStandalone)
+        {
+            WSServerState.RemovePlayer(WSConfig.DeviceId);
+            return;
+        }
+
+        if (_leave == null)
+        {
+            Debug.LogError("Not yet connected");
+            return;
+        }
+
+        _leave.Send(WSConfig.DeviceId.ToString());
     }
 
     public static void UpdatePlayerInput(PlayerInput playerInput)

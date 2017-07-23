@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManagerScript : MonoBehaviour
@@ -40,6 +41,9 @@ public class GameManagerScript : MonoBehaviour
     public NetManager NetManager;
     public static int GameState;
 
+    public GameObject ReadyPanel;
+    public GameObject ReadyButton;
+
     public GameObject ResultPanel;
     public GameObject WinButton;
     public GameObject LoseButton;
@@ -53,12 +57,18 @@ public class GameManagerScript : MonoBehaviour
     void OnDestroy()
     {
         GameState = 0;
+        WSClient.Leave();
     }
 
     void GameStart()
     {
         GameState = 1;
         ScoreView.Swap = (MyTeam == 1);
+    }
+
+    public void OnReady()
+    {
+        WSClient.Join();
     }
 
     //판넬 키는 부분
@@ -69,10 +79,18 @@ public class GameManagerScript : MonoBehaviour
 
         if (GameState == 0)
         {
+            if (Players.ContainsKey(WSConfig.DeviceId))
+                ReadyButton.SetActive(false);
+
             if (Init.DebugStandalone)
+            {
                 GameStart();
+            }
             else if (Players.Count >= 2)
+            {
+                ReadyPanel.SetActive(false);
                 Invoke("GameStart", 2.0f);
+            }
         }
         else if (GameState == 1)
         {
@@ -117,6 +135,12 @@ public class GameManagerScript : MonoBehaviour
                 if (meWinState == -1)
                     LoseButton.SetActive(true);
             }
+        }
+        else if (GameState == 2)
+        {
+            if (WSServerState.JoinedPlayers.Count < 2)
+                WSServerState.Reset();
+            SceneManager.LoadScene("main");
         }
     }
 

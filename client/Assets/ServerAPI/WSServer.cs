@@ -16,6 +16,16 @@ public static class WSServer
         }
     }
 
+    private class Leave : WebSocketBehavior
+    {
+        protected override void OnMessage(MessageEventArgs e)
+        {
+            var deviceId = int.Parse(e.Data);
+            Debug.Log("Leave: " + deviceId);
+            WSServerState.RemovePlayer(deviceId);
+        }
+    }
+
     private class UpdatePlayerInput : WebSocketBehavior
     {
         protected override void OnMessage(MessageEventArgs e)
@@ -61,6 +71,7 @@ public static class WSServer
         if (_sv != null) Stop();
         _sv = new WebSocketServer("ws://0.0.0.0:8080/");
         _sv.AddWebSocketService<Join>("/Join");
+        _sv.AddWebSocketService<Leave>("/Leave");
         _sv.AddWebSocketService<UpdatePlayerInput>("/UpdatePlayerInput");
         _sv.AddWebSocketService<GetGameState>("/GetGameState");
         _sv.AddWebSocketService<_Broadcast>("/Broadcast");
