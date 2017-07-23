@@ -27,7 +27,8 @@ public class ServerPlayerSimulator : MonoBehaviour
             break;
         }
         //Debug.Log(playerInput.DPad);
-        body.AddForce(playerInput.DPad * 1000 * speed, ForceMode2D.Force);
+        var touchPower = 1500 * speed;
+        body.AddForce(playerInput.DPad * touchPower, ForceMode2D.Force);
 
         var arrowPower = speed * 2000;
         if (playerInput.LeftArrow)
