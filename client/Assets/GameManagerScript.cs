@@ -40,6 +40,7 @@ public class GameManagerScript : MonoBehaviour
     public TimerView TimerView;
     public NetManager NetManager;
     public static int GameState;
+    public static bool ResetServer;
 
     public GameObject ReadyPanel;
     public GameObject ReadyButton;
@@ -136,8 +137,10 @@ public class GameManagerScript : MonoBehaviour
                     LoseButton.SetActive(true);
             }
         }
-        else if (GameState == 2)
+
+        if (ResetServer && WSServer.IsRunning)
         {
+            ResetServer = false;
             if (WSServerState.JoinedPlayers.Count < 2)
                 WSServerState.Reset();
             SceneManager.LoadScene("main");

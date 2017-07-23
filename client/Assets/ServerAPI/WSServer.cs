@@ -23,6 +23,8 @@ public static class WSServer
             var deviceId = int.Parse(e.Data);
             Debug.Log("Leave: " + deviceId);
             WSServerState.RemovePlayer(deviceId);
+            if (GameManagerScript.GameState == 2)
+                GameManagerScript.ResetServer = true;
         }
     }
 
