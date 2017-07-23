@@ -40,6 +40,7 @@ public class GameManagerScript : MonoBehaviour
     public NetManager NetManager;
     public static int GameState;
 
+    public GameObject ResultPanel;
     public GameObject WinButton;
     public GameObject LoseButton;
     public GameObject DrawButton;
@@ -72,25 +73,46 @@ public class GameManagerScript : MonoBehaviour
 
         if (finish == false)
         {
+            var maybeMyTeam = MyTeam;
+            int myTeam = 0;
+            if (maybeMyTeam.HasValue)
+                myTeam = maybeMyTeam.Value;
+            else
+            {
+                Debug.LogError("My player not found");
+                myTeam = 0;
+            }
+
             if (ServerGameTime < 0.0f || Score.P1Score == 10 || Score.P2Score == 10)
             {
                 finish = true;
-                GameObject.Find("Panel").SetActive(true);
+                var meWinState = 0;
+                ResultPanel.SetActive(true);
                 if (Score.P1Score > Score.P2Score)
                 {
                     ManWin.SetActive(true);
                     GirlLose.SetActive(true);
+                    meWinState = (myTeam == 0) ? 1 : -1;
                 }
                 else if (Score.P1Score == Score.P2Score)
                 {
                     ManLose.SetActive(true);
                     GirlLose.SetActive(true);
+                    meWinState = 0;
                 }
                 else
                 {
                     ManLose.SetActive(true);
                     GirlWin.SetActive(true);
+                    meWinState = (myTeam == 0) ? -1 : 1;
                 }
+
+                if (meWinState == 1)
+                    WinButton.SetActive(true);
+                if (meWinState == 0)
+                    DrawButton.SetActive(true);
+                if (meWinState == -1)
+                    LoseButton.SetActive(true);
             }
         }
     }

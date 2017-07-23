@@ -760,6 +760,7 @@ MonoBehaviour:
   ScoreView: {fileID: 1270778822}
   TimerView: {fileID: 734424984}
   NetManager: {fileID: 636357403}
+  ResultPanel: {fileID: 2144538063}
   WinButton: {fileID: 1665823404}
   LoseButton: {fileID: 1176509447}
   DrawButton: {fileID: 556826627}
@@ -2575,7 +2576,7 @@ GameObject:
   - component: {fileID: 2144538066}
   - component: {fileID: 2144538065}
   m_Layer: 5
-  m_Name: Panel
+  m_Name: ResultPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
