@@ -6,8 +6,8 @@ using UnityEngine.UI;
 public class PlayerScript : MonoBehaviour
 {
     public float power;
-    public static float speed;
-    public static float SpinSpeed;
+    public float speed;
+    public float SpinSpeed;
     public GameObject Effect1;
     GameObject eff1;
     Animator PlayerAnimator;
