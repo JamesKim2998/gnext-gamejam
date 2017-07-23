@@ -92,6 +92,10 @@ public class GameManagerScript : MonoBehaviour
                 ReadyPanel.SetActive(false);
                 Invoke("GameStart", 2.0f);
             }
+            else
+            {
+                ReadyPanel.SetActive(true);
+            }
         }
         else if (GameState == 1)
         {

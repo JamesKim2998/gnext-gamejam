@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Init : MonoBehaviour
 {
-    public static bool DebugStandalone = true;
+    public static bool DebugStandalone = false;
 
-#if !UNITY_EDITOR && UNITY_STANDALONE_OSX
+#if !UNITY_EDITOR && (UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX)
     public static bool IsClient = false;
 #else
     public static bool IsClient = true;
@@ -41,7 +41,8 @@ public class Init : MonoBehaviour
         {
             WSClient.Disconnect();
             WSClientState.Reset();
-            WSServer.Start();
+            if (!WSServer.IsRunning)
+                WSServer.Start();
         }
     }
 
